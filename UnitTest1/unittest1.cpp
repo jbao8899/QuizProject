@@ -306,5 +306,53 @@ namespace questiontests {
 			Assert::AreEqual(question.GetAvailablePoints()[2], 0.5);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
 		}
+
+		TEST_METHOD(AnswerQuestionsPointsOne) {
+			Question question;
+			question.AddCorrectAnswer("correct");
+			question.SetAvailablePoints("5");
+			question.SubmitStudentAnswer("correct");
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(AnswerQuestionsPointsTwo) {
+			Question question;
+			question.AddCorrectAnswer("correct");
+			question.SetAvailablePoints("5,3");
+			question.SubmitStudentAnswer("wrong");
+			question.SubmitStudentAnswer("correct");
+			Assert::AreEqual(question.GetCurrentScore(), 3.0);
+		}
+
+		TEST_METHOD(AnswerQuestionsPointsThree) {
+			Question question;
+			question.AddCorrectAnswer("correct");
+			question.SetAvailablePoints("5,3,1");
+			question.SubmitStudentAnswer("wrong");
+			question.SubmitStudentAnswer("incorrect");
+			question.SubmitStudentAnswer("still not right");
+			question.SubmitStudentAnswer("correct");
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(AnswerQuestionsPointsFour) {
+			Question question;
+			question.AddCorrectAnswer("correct");
+			question.AddCorrectAnswer("Also correct");
+			question.SetAvailablePoints("5,3,1");
+			question.SubmitStudentAnswer("Also correct");
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(AnswerQuestionsPointsFive) {
+			Question question;
+			question.AddCorrectAnswer("correct");
+			question.AddCorrectAnswer("Also correct");
+			question.SetAvailablePoints("5,3,1");
+			question.SubmitStudentAnswer("wrong");
+			question.SubmitStudentAnswer("Also correct");
+			question.SubmitStudentAnswer("correct");
+			Assert::AreEqual(question.GetCurrentScore(), 3.0);
+		}
 	};
 }

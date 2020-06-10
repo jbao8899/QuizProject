@@ -11,7 +11,7 @@ using std::pair;
 using std::find;
 using std::deque;
 
-//TODO: Test answering question with points!!!!
+//TODO: RENAME TESTS!
 
 class Question {
 private:

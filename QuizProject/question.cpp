@@ -45,8 +45,8 @@ bool Question::SubmitStudentAnswer(string answer) {
 		}
 	}
 
-	if (answer_was_correct && !available_points.empty() && available_points.front > current_score) {
-		current_score = available_points.front;
+	if (answer_was_correct && !available_points.empty() && available_points[0] > current_score) {
+		current_score = available_points[0];
 	}
 	if (!available_points.empty()) {
 		available_points.pop_front();
