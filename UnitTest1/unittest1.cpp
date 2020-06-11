@@ -60,7 +60,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetQuestion(), q_text);
 		}
 
-		TEST_METHOD(AddGetRemoveAnswersOne) {
+		TEST_METHOD(AddGetRemoveAnswersSingleEmptyString) {
 			Question question;
 			question.AddCorrectAnswer("");
 			string a1 = "";
@@ -72,7 +72,7 @@ namespace questiontests {
 			}
 		}
 
-		TEST_METHOD(AddGetRemoveAnswersTwo) {
+		TEST_METHOD(AddGetRemoveAnswersThreeAnswers) {
 			Question question;
 			question.AddCorrectAnswer("abcdefg");
 			question.AddCorrectAnswer("");
@@ -90,7 +90,7 @@ namespace questiontests {
 			}
 		}
 
-		TEST_METHOD(AddGetRemoveAnswersThree) {
+		TEST_METHOD(AddGetRemoveAnswersAddAndRemoveAnswers) {
 			Question question;
 			question.AddCorrectAnswer("first");
 			question.AddCorrectAnswer("second");
@@ -131,7 +131,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 		}
 
-		TEST_METHOD(AnswerQuestionsOne) {
+		TEST_METHOD(AnswerQuestionSingleCorrectAnswer) {
 			Question question;
 			question.AddCorrectAnswer("first");
 			vector<string> answers;
@@ -144,7 +144,7 @@ namespace questiontests {
 			}
 		}
 
-		TEST_METHOD(AnswerQuestionsTwo) {
+		TEST_METHOD(AnswerQuestionMultipleAnswers) {
 			Question question;
 			question.AddCorrectAnswer("forth correct");
 			question.AddCorrectAnswer("second correct");
@@ -190,13 +190,13 @@ namespace questiontests {
 			}
 		}
 
-		TEST_METHOD(ClearCorrectAnswersOne) {
+		TEST_METHOD(ClearCorrectAnswersWhenNoneExist) {
 			Question question;
 			question.ClearCorrectAnswers();
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 		}
 
-		TEST_METHOD(ClearCorrectAnswersTwo) {
+		TEST_METHOD(ClearCorrectAnswersWhenSomeExist) {
 			Question question;
 			question.AddCorrectAnswer("forth correct");
 			question.AddCorrectAnswer("second correct");
@@ -206,7 +206,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 		}
 
-		TEST_METHOD(ClearCorrectAnswersThree) {
+		TEST_METHOD(ClearCorrectAnswerAndAddNew) {
 			Question question;
 			question.AddCorrectAnswer("forth correct");
 			question.ClearCorrectAnswers();
@@ -215,14 +215,14 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCorrectAnswers()[0], (string)"new answer");
 		}
 
-		TEST_METHOD(ClearStudentAnswersOne) {
+		TEST_METHOD(ClearStudentAnswerWhenThereAreNone) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.ClearStudentAnswers();
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 		}
 
-		TEST_METHOD(ClearStudentAnswersTwo) {
+		TEST_METHOD(ClearStudentAnswersWhenThereAreTwo) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.SubmitStudentAnswer("correct");
@@ -231,7 +231,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 		}
 
-		TEST_METHOD(ClearStudentAnswersThree) {
+		TEST_METHOD(ClearStudentAnswersAndAddNewOne) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.SubmitStudentAnswer("correct");
@@ -307,7 +307,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
 		}
 
-		TEST_METHOD(AnswerQuestionsPointsOne) {
+		TEST_METHOD(AnswerQuestionsPointsCorrectFirstTry) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5");
@@ -315,7 +315,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCurrentScore(), 5.0);
 		}
 
-		TEST_METHOD(AnswerQuestionsPointsTwo) {
+		TEST_METHOD(AnswerQuestionsPointsCorrectSecondTry) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5,3");
@@ -324,7 +324,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCurrentScore(), 3.0);
 		}
 
-		TEST_METHOD(AnswerQuestionsPointsThree) {
+		TEST_METHOD(AnswerQuestionsPointsZeroPointsRanOutOfTries) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5,3,1");
@@ -335,7 +335,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 		}
 
-		TEST_METHOD(AnswerQuestionsPointsFour) {
+		TEST_METHOD(AnswerQuestionsPointsSubsequentCorrectAnswersDoNotReduceSCore) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.AddCorrectAnswer("Also correct");
@@ -344,7 +344,7 @@ namespace questiontests {
 			Assert::AreEqual(question.GetCurrentScore(), 5.0);
 		}
 
-		TEST_METHOD(AnswerQuestionsPointsFive) {
+		TEST_METHOD(AnswerQuestionsPointsCorrectAndIncorrectAnswers) {
 			Question question;
 			question.AddCorrectAnswer("correct");
 			question.AddCorrectAnswer("Also correct");

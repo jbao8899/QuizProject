@@ -11,7 +11,7 @@ using std::pair;
 using std::find;
 using std::deque;
 
-//TODO: RENAME TESTS!
+//TODO: Tolerance on numerical
 
 class Question {
 private:
