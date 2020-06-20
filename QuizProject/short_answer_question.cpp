@@ -1,43 +1,43 @@
 #include "pch.h"
-#include "question.h"
+#include "short_answer_question.h"
 
-Question::Question() {
+ShortAnswerQuestion::ShortAnswerQuestion() {
 	question_text = "";
 	current_score = 0.0;
 }
 
-Question::Question(string set_question) {
+ShortAnswerQuestion::ShortAnswerQuestion(string set_question) {
 	question_text = set_question;
 	current_score = 0.0;
 }
 
-void Question::SetQuestion(string set_question) {
+void ShortAnswerQuestion::SetQuestion(string set_question) {
 	question_text = set_question;
 }
 
-string Question::GetQuestion() const {
+string ShortAnswerQuestion::GetQuestion() const {
 	return question_text;
 }
 
-void Question::AddCorrectAnswer(string to_add) {
+void ShortAnswerQuestion::AddCorrectAnswer(string to_add) {
 	correct_answers.push_back(to_add);
 }
 
-void Question::RemoveCorrectAnswer(string to_remove) {
+void ShortAnswerQuestion::RemoveCorrectAnswer(string to_remove) {
 	if (find(correct_answers.begin(), correct_answers.end(), to_remove) != correct_answers.end()) {
 		correct_answers.erase(std::remove(correct_answers.begin(), correct_answers.end(), to_remove), correct_answers.end());
 	}
 }
 
-void Question::ClearCorrectAnswers() {
+void ShortAnswerQuestion::ClearCorrectAnswers() {
 	correct_answers.clear();
 }
 
-const vector<string>& Question::GetCorrectAnswers() const {
+const vector<string>& ShortAnswerQuestion::GetCorrectAnswers() const {
 	return correct_answers;
 }
 
-bool Question::SubmitStudentAnswer(string answer) {
+bool ShortAnswerQuestion::SubmitStudentAnswer(string answer) {
 	bool answer_was_correct = false;
 	for (unsigned i = 0; i < correct_answers.size(); ++i) {
 		if (answer == correct_answers[i]) {
@@ -56,15 +56,15 @@ bool Question::SubmitStudentAnswer(string answer) {
 	return answer_was_correct;
 }
 
-const vector<pair<string, bool>>& Question::GetStudentAnswers() {
+const vector<pair<string, bool>>& ShortAnswerQuestion::GetStudentAnswers() {
 	return student_answers;
 }
 
-void Question::ClearStudentAnswers() {
+void ShortAnswerQuestion::ClearStudentAnswers() {
 	student_answers.clear();
 }
 
-void Question::SetAvailablePoints(string available_points_string) {
+void ShortAnswerQuestion::SetAvailablePoints(string available_points_string) {
 	available_points.clear();
 
 	if (available_points_string == ""
@@ -97,10 +97,10 @@ void Question::SetAvailablePoints(string available_points_string) {
 	}
 }
 
-const deque<double>& Question::GetAvailablePoints() {
+const deque<double>& ShortAnswerQuestion::GetAvailablePoints() {
 	return available_points;
 }
 
-double Question::GetCurrentScore() {
+double ShortAnswerQuestion::GetCurrentScore() {
 	return current_score;
 }

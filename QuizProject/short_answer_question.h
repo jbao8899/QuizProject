@@ -11,9 +11,8 @@ using std::pair;
 using std::find;
 using std::deque;
 
-//TODO: Tolerance on numerical
 
-class Question {
+class ShortAnswerQuestion {
 private:
 	string                     question_text;
 	deque<double>			   available_points;
@@ -21,11 +20,11 @@ private:
 	vector<pair<string, bool>> student_answers; //string is what the student inputted, bool is if they got it correct
 	double                     current_score;
 public:
-	//Create a question object with a question_text of "" and empty vectors for correct answers and student answers 
-	Question();
+	//Create a ShortAnswerQuestion object with a question_text of "" and empty vectors for correct answers and student answers 
+	ShortAnswerQuestion();
 
-	//Creates a question object with a question_text of set_question and empty vectors for correct answers and student answers 
-	Question(string set_question);
+	//Creates a ShortAnswerQuestion object with a question_text of set_question and empty vectors for correct answers and student answers 
+	ShortAnswerQuestion(string set_question);
 
 	//Changes the question_text to set_question
 	void                              SetQuestion(string set_question);

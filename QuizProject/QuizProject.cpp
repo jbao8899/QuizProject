@@ -2,7 +2,7 @@
 //
 
 #include "pch.h"
-#include "question.h"
+#include "short_answer_question.h"
 #include <iostream>
 #include <string>
 
@@ -17,7 +17,7 @@ int main()
 	string q_text;
 	cout << "Enter a question" << endl;
 	getline(cin, q_text);
-	Question q;
+	ShortAnswerQuestion q;
 	q.SetQuestion(q_text);
 	cout << "Enter some answers" << endl;
 	while (true) {

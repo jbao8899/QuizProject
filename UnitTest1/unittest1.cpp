@@ -3,8 +3,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../QuizProject/question.h"
-#include "../QuizProject/question.cpp"
+#include "../QuizProject/short_answer_question.h"
+#include "../QuizProject/short_answer_question.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;
@@ -12,56 +12,56 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-namespace questiontests {		
-	TEST_CLASS(QuestionTests) {
+namespace shortanswerquestiontests {		
+	TEST_CLASS(ShortAnswerQuestionTests) {
 	public:
 		TEST_METHOD(DefaultConstructor) {
-			Question question;
+			ShortAnswerQuestion question;
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorEmptyString) {
-			Question question("");
+			ShortAnswerQuestion question("");
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorLengthOneString) {
-			Question question("a");
+			ShortAnswerQuestion question("a");
 			string q_text = "a";
 			Assert::AreEqual(question.GetQuestion(), q_text);
 		}
 
 		TEST_METHOD(CustomQuestionConstructor) {
-			Question question("8BADF00D");
+			ShortAnswerQuestion question("8BADF00D");
 			string q_text = "8BADF00D";
 			Assert::AreEqual(question.GetQuestion(), q_text);
 		}
 
 		TEST_METHOD(GetSetQuestion) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetQuestion("Have you ever had a tangerine?");
 			string q_text = "Have you ever had a tangerine?";
 			Assert::AreEqual(question.GetQuestion(), q_text);
 		}
 
 		TEST_METHOD(GetSetQuestionEmpty) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetQuestion("");
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
 		}
 
 		TEST_METHOD(GetSetQuestionLength1) {
-			Question question("Should be gone");
+			ShortAnswerQuestion question("Should be gone");
 			question.SetQuestion("5");
 			string q_text = "5";
 			Assert::AreEqual(question.GetQuestion(), q_text);
 		}
 
 		TEST_METHOD(AddGetRemoveAnswersSingleEmptyString) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("");
 			string a1 = "";
 			vector<string> answers;
@@ -73,7 +73,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AddGetRemoveAnswersThreeAnswers) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("abcdefg");
 			question.AddCorrectAnswer("");
 			question.AddCorrectAnswer("H0r5eRAD1$h");
@@ -91,7 +91,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AddGetRemoveAnswersAddAndRemoveAnswers) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("first");
 			question.AddCorrectAnswer("second");
 			question.AddCorrectAnswer("removed!");
@@ -113,7 +113,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(RemoveAnswerWhenNotThere) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("first");
 			string a1 = "first";
 			vector<string> answers;
@@ -126,13 +126,13 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(RemoveAnswerWhenNotThereTwo) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.RemoveCorrectAnswer("Nothing happens");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 		}
 
 		TEST_METHOD(AnswerQuestionSingleCorrectAnswer) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("first");
 			vector<string> answers;
 			answers.push_back("first");
@@ -145,7 +145,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionMultipleAnswers) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("forth correct");
 			question.AddCorrectAnswer("second correct");
 			question.AddCorrectAnswer("third correct");
@@ -191,13 +191,13 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(ClearCorrectAnswersWhenNoneExist) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.ClearCorrectAnswers();
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 		}
 
 		TEST_METHOD(ClearCorrectAnswersWhenSomeExist) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("forth correct");
 			question.AddCorrectAnswer("second correct");
 			question.AddCorrectAnswer("third correct");
@@ -207,7 +207,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(ClearCorrectAnswerAndAddNew) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("forth correct");
 			question.ClearCorrectAnswers();
 			question.AddCorrectAnswer("new answer");
@@ -216,14 +216,14 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(ClearStudentAnswerWhenThereAreNone) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.ClearStudentAnswers();
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 		}
 
 		TEST_METHOD(ClearStudentAnswersWhenThereAreTwo) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.SubmitStudentAnswer("correct");
 			question.SubmitStudentAnswer("wrong");
@@ -232,7 +232,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(ClearStudentAnswersAndAddNewOne) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.SubmitStudentAnswer("correct");
 			question.SubmitStudentAnswer("wrong");
@@ -244,50 +244,50 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(SetAvailablePointsEmptyString) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsCommaOnly) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints(",");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsDoubleComma) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5,4,3,2,,1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsContainsSpaces) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("10, 8, 6, 4, 2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsContainsLetter) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5,3,1a");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsContainsSymbol) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5!,3,2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
 		TEST_METHOD(SetAvailablePointsOneAttemptAllowed) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)1);
 			Assert::AreEqual(question.GetAvailablePoints()[0], 5.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsFiveAttemptsAllowed) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("10,10,8,5,3");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)5);
 			Assert::AreEqual(question.GetAvailablePoints()[0], 10.0);
@@ -298,7 +298,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(SetAvailablePointsDecimalValues) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.SetAvailablePoints("1.5,0.75,0.5,0.25");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)4);
 			Assert::AreEqual(question.GetAvailablePoints()[0], 1.5);
@@ -308,7 +308,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsCorrectFirstTry) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5");
 			question.SubmitStudentAnswer("correct");
@@ -316,7 +316,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsCorrectSecondTry) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5,3");
 			question.SubmitStudentAnswer("wrong");
@@ -325,7 +325,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsZeroPointsRanOutOfTries) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.SetAvailablePoints("5,3,1");
 			question.SubmitStudentAnswer("wrong");
@@ -336,7 +336,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsSubsequentCorrectAnswersDoNotReduceSCore) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.AddCorrectAnswer("Also correct");
 			question.SetAvailablePoints("5,3,1");
@@ -345,7 +345,7 @@ namespace questiontests {
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsCorrectAndIncorrectAnswers) {
-			Question question;
+			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
 			question.AddCorrectAnswer("Also correct");
 			question.SetAvailablePoints("5,3,1");
