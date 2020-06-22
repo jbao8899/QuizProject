@@ -1,18 +1,16 @@
 #pragma once
+#include "question.h"
 
-using std::string;
-using std::vector;
-using std::pair;
-using std::find;
-using std::deque;
 using std::transform;
 
 class ShortAnswerQuestion : public Question {
 public:
-	//Create a ShortAnswerQuestion object with a question_text of "" and empty vectors for correct answers and student answers 
+	//Create a ShortAnswerQuestion object with a question_text of "", an empty deque for available_points
+	// empty vectors for correct_answers and student answers, and a current score of 0
 	ShortAnswerQuestion();
 
-	//Creates a ShortAnswerQuestion object with a question_text of set_question and empty vectors for correct answers and student answers 
+	//Create a ShortAnswerQuestion object with a question_text of set_question, an empty deque for
+	// available_points empty vectors for correct_answers and student answers, and a current score of 0
 	ShortAnswerQuestion(string set_question);
 
 	//Used when the student submits an answer. Looks through the vector of correct answers, and if their answer is right,

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "question.h"
 #include "short_answer_question.h"
 
 ShortAnswerQuestion::ShortAnswerQuestion() {

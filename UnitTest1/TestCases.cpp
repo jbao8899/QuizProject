@@ -8,38 +8,54 @@
 #include "../QuizProject/question.cpp"
 #include "../QuizProject/short_answer_question.h"
 #include "../QuizProject/short_answer_question.cpp"
+#include "../QuizProject/numerical_question.h"
+#include "../QuizProject/numerical_question.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;
 using std::vector;
-using std::cout;
-using std::endl;
 
-namespace shortanswerquestiontests {		
+namespace TestCases {		
 	TEST_CLASS(ShortAnswerQuestionTests) {
 	public:
 		TEST_METHOD(DefaultConstructor) {
 			ShortAnswerQuestion question;
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorEmptyString) {
 			ShortAnswerQuestion question("");
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorLengthOneString) {
 			ShortAnswerQuestion question("a");
 			string q_text = "a";
 			Assert::AreEqual(question.GetQuestion(), q_text);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructor) {
 			ShortAnswerQuestion question("8BADF00D");
 			string q_text = "8BADF00D";
 			Assert::AreEqual(question.GetQuestion(), q_text);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 		}
 
 		TEST_METHOD(GetSetQuestion) {
@@ -364,6 +380,58 @@ namespace shortanswerquestiontests {
 			question.SetAvailablePoints("3.5");
 			question.SubmitStudentAnswer("CoRrEcT12345^&*()");
 			Assert::AreEqual(question.GetCurrentScore(), 3.5);
+		}
+	};
+
+	TEST_CLASS(NumericalQuestionTests) {
+	public:
+		TEST_METHOD(DefaultConstructor) {
+			NumericalQuestion question;
+			string empty = "";
+			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CustomQuestionConstructorEmptyString) {
+			NumericalQuestion question("");
+			string empty = "";
+			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CustomQuestionConstructorLengthOneString) {
+			NumericalQuestion question("a");
+			string q_text = "a";
+			Assert::AreEqual(question.GetQuestion(), q_text);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+
+		}
+
+		TEST_METHOD(CustomQuestionConstructor) {
+			NumericalQuestion question("8BADF00D");
+			string q_text = "8BADF00D";
+			Assert::AreEqual(question.GetQuestion(), q_text);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 	};
 }
