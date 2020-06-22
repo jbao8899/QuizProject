@@ -13,8 +13,6 @@ using std::endl;
 using std::getline;
 using std::string;
 
-//TODO: Ignore case for short answer!!!!
-
 int main()
 {	
 	string q_text;

@@ -1,16 +1,11 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <utility>
-#include <deque>
 
 using std::string;
 using std::vector;
 using std::pair;
 using std::find;
 using std::deque;
-
+using std::transform;
 
 class ShortAnswerQuestion : public Question {
 public:
@@ -23,5 +18,7 @@ public:
 	//Used when the student submits an answer. Looks through the vector of correct answers, and if their answer is right,
 	//true is returned, and if it is wrong, false is returned. In either case, we save their answer, along with whether it
 	//was right or not
+	//Does not care about case (ex: If "George Washington" is a correct answer, then the student will get points for
+	//submitting "george washington"
 	bool                              SubmitStudentAnswer(string answer);
 };

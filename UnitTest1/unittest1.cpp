@@ -357,5 +357,13 @@ namespace shortanswerquestiontests {
 			question.SubmitStudentAnswer("correct");
 			Assert::AreEqual(question.GetCurrentScore(), 3.0);
 		}
+
+		TEST_METHOD(AnswerQuestionsPointsCaseDoesNotMatter) {
+			ShortAnswerQuestion question;
+			question.AddCorrectAnswer("cOrReCt12345^&*()");
+			question.SetAvailablePoints("3.5");
+			question.SubmitStudentAnswer("CoRrEcT12345^&*()");
+			Assert::AreEqual(question.GetCurrentScore(), 3.5);
+		}
 	};
 }
