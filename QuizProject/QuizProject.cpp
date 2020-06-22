@@ -2,6 +2,7 @@
 //
 
 #include "pch.h"
+#include "question.h"
 #include "short_answer_question.h"
 #include <iostream>
 #include <string>
@@ -11,6 +12,8 @@ using std::cin;
 using std::endl;
 using std::getline;
 using std::string;
+
+//TODO: Ignore case for short answer!!!!
 
 int main()
 {	

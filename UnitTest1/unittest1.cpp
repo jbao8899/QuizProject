@@ -3,6 +3,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
+//Must include .cpp files for some reason once added inheritance
+#include "../QuizProject/question.h"
+#include "../QuizProject/question.cpp"
 #include "../QuizProject/short_answer_question.h"
 #include "../QuizProject/short_answer_question.cpp"
 
