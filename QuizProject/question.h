@@ -17,16 +17,16 @@ using std::vector;
 
 class Question {
 protected:
-	string                     question_text;
-	deque<double>			   available_points;
-	vector<string>             correct_answers;
-	vector<pair<string, bool>> student_answers; //string is what the student inputted, bool is if they got it correct
-	double                     current_score;
+	string                     question_text_;
+	deque<double>			   available_points_;
+	vector<string>             correct_answers_;
+	vector<pair<string, bool>> student_answers_; //string is what the student inputted, bool is if they got it correct
+	double                     current_score_;
 public:
-	//Changes the question_text to set_question
+	//Changes the question_text_ to set_question
 	virtual void                              SetQuestion(string set_question);
 
-	//Returns the current question_text
+	//Returns the current question_text_
 	virtual string                            GetQuestion() const;
 
 	//Adds to_add to the vector containing correct answers

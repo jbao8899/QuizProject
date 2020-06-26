@@ -6,12 +6,14 @@
 #include <vector>
 
 //Must include .cpp files for some reason once added inheritance
-#include "../QuizProject/question.h"
-#include "../QuizProject/question.cpp"
-#include "../QuizProject/short_answer_question.h"
-#include "../QuizProject/short_answer_question.cpp"
 #include "../QuizProject/numerical_question.h"
 #include "../QuizProject/numerical_question.cpp"
+#include "../QuizProject/question.h"
+#include "../QuizProject/question.cpp"
+#include "../QuizProject/question_key.h"
+#include "../QuizProject/question_key.cpp"
+#include "../QuizProject/short_answer_question.h"
+#include "../QuizProject/short_answer_question.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;
@@ -1025,6 +1027,57 @@ namespace TestCases {
 			Assert::AreEqual(question.GetAvailablePoints()[1], 0.75);
 			Assert::AreEqual(question.GetAvailablePoints()[2], 0.5);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
+		}
+	};
+
+	TEST_CLASS(QuestionKeyTests) {
+	public:
+		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndex) {
+			QuestionKey key_one(3, "apples");
+			QuestionKey key_two(3, "oranges");
+			Assert::IsTrue(key_one == key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionIndex) {
+			QuestionKey key_one(3, "apples");
+			QuestionKey key_two(3, "oranges");
+			Assert::IsFalse(key_one != key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionLabel) {
+			QuestionKey key_one(347867845, "UY5848&878efy&4t");
+			QuestionKey key_two(-17, "UY5848&878efy&4t");
+			Assert::IsTrue(key_one == key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionLabel) {
+			QuestionKey key_one(347867845, "UY5848&878efy&4t");
+			QuestionKey key_two(-17, "UY5848&878efy&4t");
+			Assert::IsFalse(key_one != key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndexAndQuestionLabel) {
+			QuestionKey key_one(57, "word");
+			QuestionKey key_two(57, "word");
+			Assert::IsTrue(key_one == key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameSameQuestionIndexAndQuestionLabel) {
+			QuestionKey key_one(57, "word");
+			QuestionKey key_two(57, "word");
+			Assert::IsFalse(key_one != key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysNotEqualIfDifferentQuestionIndexAndQuestionLabel) {
+			QuestionKey key_one(1, "banana");
+			QuestionKey key_two(0, "bananna");
+			Assert::IsFalse(key_one == key_two);
+		}
+
+		TEST_METHOD(TwoQuestionKeysDifferentIfIfDifferentQuestionIndexAndQuestionLabel) {
+			QuestionKey key_one(1, "banana");
+			QuestionKey key_two(0, "bananna");
+			Assert::IsTrue(key_one != key_two);
 		}
 	};
 }
