@@ -1,14 +1,13 @@
-// QuizProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include "pch.h"
-#include "question.h"
-#include "short_answer_question.h"
+
 #include <iostream>
 #include <string>
 
-using std::cout;
+#include "question.h"
+#include "short_answer_question.h"
+
 using std::cin;
+using std::cout;
 using std::endl;
 using std::getline;
 using std::string;

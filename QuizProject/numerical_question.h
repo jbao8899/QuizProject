@@ -1,5 +1,6 @@
 #pragma once
 #include "question.h"
+
 class NumericalQuestion : public Question {
 private:
 	//If the absolute error of the student's answer (|correct_answer - student answer|) exceeds this value,

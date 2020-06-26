@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+
 #include <string>
 #include <iostream>
 #include <vector>
+
 //Must include .cpp files for some reason once added inheritance
 #include "../QuizProject/question.h"
 #include "../QuizProject/question.cpp"

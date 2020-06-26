@@ -1,19 +1,19 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <algorithm>
-#include <utility>
-#include <deque>
 #include <cmath>
+#include <deque>
+#include <string>
+#include <utility>
+#include <vector>
 
+using std::abs;
+using std::count;
+using std::deque;
+using std::find;
+using std::pair;
 using std::string;
 using std::vector;
-using std::pair;
-using std::find;
-using std::deque;
-using std::count;
-using std::abs;
 
 class Question {
 protected:
