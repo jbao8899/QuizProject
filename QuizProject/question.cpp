@@ -29,7 +29,7 @@ const vector<string>& Question::GetCorrectAnswers() const {
 
 bool Question::SubmitStudentAnswer(string answer) {
 	bool answer_was_correct = false;
-	for (unsigned i = 0; i < correct_answers.size(); i++) {
+	for (unsigned i = 0; i < correct_answers.size(); ++i) {
 		if (answer == correct_answers[i]) {
 			answer_was_correct = true;
 			break;
@@ -64,7 +64,7 @@ void Question::SetAvailablePoints(string available_points_string) {
 		return;
 	}
 
-	for (unsigned i = 0; i < available_points_string.length(); i++) {
+	for (unsigned i = 0; i < available_points_string.length(); ++i) {
 		if (available_points_string[i] == ' '
 			|| (!isdigit(available_points_string[i])
 				&& available_points_string[i] != ','

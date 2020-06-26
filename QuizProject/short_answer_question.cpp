@@ -17,7 +17,7 @@ bool ShortAnswerQuestion::SubmitStudentAnswer(string answer) {
 	//https://notfaq.wordpress.com/2007/08/04/cc-convert-string-to-upperlower-case/
 	std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 
-	for (unsigned i = 0; i < correct_answers.size(); i++) {
+	for (unsigned i = 0; i < correct_answers.size(); ++i) {
 		string lower_case_correct_answer = correct_answers[i];
 		std::transform(lower_case_correct_answer.begin(), lower_case_correct_answer.end(), lower_case_correct_answer.begin(), ::tolower);
 

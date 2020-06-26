@@ -33,7 +33,7 @@ double NumericalQuestion::GetPermittedRelativeError() const {
 
 void NumericalQuestion::AddCorrectAnswer(string to_add) {
 	//Checking that to_add is a decimal number
-	for (unsigned i = 0; i < to_add.length(); i++) {
+	for (unsigned i = 0; i < to_add.length(); ++i) {
 		if (!isdigit(to_add[i]) && to_add[i] != '.' && to_add[i] != '-') {
 			return;
 		}
@@ -52,7 +52,7 @@ bool NumericalQuestion::SubmitStudentAnswer(string answer) {
 	bool answer_was_correct = false;
 
 	//Checking that answer is a decimal number. If it is not, return false (they answered question wrong)
-	for (unsigned i = 0; i < answer.length(); i++) {
+	for (unsigned i = 0; i < answer.length(); ++i) {
 		if (!isdigit(answer[i]) && answer[i] != '.' && answer[i] != '-') {
 			student_answers.push_back(pair<string, bool>(answer, answer_was_correct));
 			return answer_was_correct;
@@ -79,7 +79,7 @@ bool NumericalQuestion::SubmitStudentAnswer(string answer) {
 
 	double answer_as_double = stod(answer);
 
-	for (unsigned i = 0; i < correct_answers.size(); i++) {
+	for (unsigned i = 0; i < correct_answers.size(); ++i) {
 		//if your answer equals one of the correct answers exactly, then you got the question right.
 		if (answer == correct_answers[i]) {
 			answer_was_correct = true;

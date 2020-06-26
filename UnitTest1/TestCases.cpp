@@ -122,7 +122,7 @@ namespace TestCases {
 			answers.push_back("second");
 			answers.push_back("done");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -134,7 +134,7 @@ namespace TestCases {
 			answers.push_back("first");
 			question.RemoveCorrectAnswer("Nothing happens");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -177,7 +177,7 @@ namespace TestCases {
 			answers.push_back("first");
 			Assert::IsTrue(question.SubmitStudentAnswer("first"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetStudentAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetStudentAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, answers[i]);
 				Assert::IsTrue(question.GetStudentAnswers()[i].second);
 			}
@@ -218,7 +218,7 @@ namespace TestCases {
 			Assert::IsTrue(question.SubmitStudentAnswer(answers[7]));
 
 			Assert::AreEqual(question.GetStudentAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetStudentAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetStudentAnswers().size(); ++i) {
 				Assert::AreEqual(answers[i], question.GetStudentAnswers()[i].first);
 				if (i == 0 || i == 1 || i == 4 || i == 7) {
 					Assert::IsTrue(question.GetStudentAnswers()[i].second);
@@ -518,7 +518,7 @@ namespace TestCases {
 			vector<string> answers;
 			answers.push_back("8");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < answers.size(); i++) {
+			for (unsigned i = 0; i < answers.size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -529,7 +529,7 @@ namespace TestCases {
 			vector<string> answers;
 			answers.push_back("3.1415");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < answers.size(); i++) {
+			for (unsigned i = 0; i < answers.size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -546,7 +546,7 @@ namespace TestCases {
 			answers.push_back("1.1");
 			answers.push_back("1.1");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < answers.size(); i++) {
+			for (unsigned i = 0; i < answers.size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -557,7 +557,7 @@ namespace TestCases {
 			vector<string> answers;
 			answers.push_back("-3.89");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < answers.size(); i++) {
+			for (unsigned i = 0; i < answers.size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -593,7 +593,7 @@ namespace TestCases {
 			answers.push_back("1.1");
 			answers.push_back("1.1");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < answers.size(); i++) {
+			for (unsigned i = 0; i < answers.size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -634,7 +634,7 @@ namespace TestCases {
 			answers.push_back("2");
 			answers.push_back("5");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -646,7 +646,7 @@ namespace TestCases {
 			answers.push_back("5");
 			question.RemoveCorrectAnswer("2");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
-			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
 			}
 		}
@@ -692,7 +692,7 @@ namespace TestCases {
 
 			Assert::IsTrue(question.SubmitStudentAnswer("5.1689"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -711,7 +711,7 @@ namespace TestCases {
 
 			Assert::IsTrue(question.SubmitStudentAnswer("5.16"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -730,7 +730,7 @@ namespace TestCases {
 
 			Assert::IsTrue(question.SubmitStudentAnswer("1009.999"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -749,7 +749,7 @@ namespace TestCases {
 
 			Assert::IsTrue(question.SubmitStudentAnswer("-21469.8505"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -769,7 +769,7 @@ namespace TestCases {
 
 			Assert::IsTrue(question.SubmitStudentAnswer("-0.328957"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -788,7 +788,7 @@ namespace TestCases {
 
 			Assert::IsFalse(question.SubmitStudentAnswer("-21469.8505"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -807,7 +807,7 @@ namespace TestCases {
 
 			Assert::IsFalse(question.SubmitStudentAnswer("1009.999"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -826,7 +826,7 @@ namespace TestCases {
 
 			Assert::IsFalse(question.SubmitStudentAnswer("-0.00021691"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -845,7 +845,7 @@ namespace TestCases {
 
 			Assert::IsFalse(question.SubmitStudentAnswer("0.0000000016"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -864,7 +864,7 @@ namespace TestCases {
 
 			Assert::IsFalse(question.SubmitStudentAnswer("9381704597946"));
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -893,7 +893,7 @@ namespace TestCases {
 			Assert::IsFalse(question.SubmitStudentAnswer("94.999"));
 
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
@@ -922,7 +922,7 @@ namespace TestCases {
 			Assert::IsTrue(question.SubmitStudentAnswer("105.0"));
 
 			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
-			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+			for (unsigned i = 0; i < expected_student_answers.size(); ++i) {
 				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
 				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
 			}
