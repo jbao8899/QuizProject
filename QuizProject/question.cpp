@@ -29,9 +29,10 @@ const vector<string>& Question::GetCorrectAnswers() const {
 
 bool Question::SubmitStudentAnswer(string answer) {
 	bool answer_was_correct = false;
-	for (unsigned i = 0; i < correct_answers.size(); ++i) {
+	for (unsigned i = 0; i < correct_answers.size(); i++) {
 		if (answer == correct_answers[i]) {
 			answer_was_correct = true;
+			break;
 		}
 	}
 
@@ -76,11 +77,19 @@ void Question::SetAvailablePoints(string available_points_string) {
 		size_t comma_location = available_points_string.find(",");
 		if (comma_location == string::npos) {
 			string num = available_points_string;
+			if (count(num.begin(), num.end(), '.') > 1) {
+				available_points.clear();
+				return;
+			}
 			available_points.push_back(stod(num));
 			break;
 		}
 		else {
 			string num = available_points_string.substr(0, comma_location);
+			if (count(num.begin(), num.end(), '.') > 1) {
+				available_points.clear();
+				return;
+			}
 			available_points_string = available_points_string.substr(comma_location + 1);
 			available_points.push_back(stod(num));
 		}

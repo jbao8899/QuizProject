@@ -96,13 +96,10 @@ namespace TestCases {
 			question.AddCorrectAnswer("abcdefg");
 			question.AddCorrectAnswer("");
 			question.AddCorrectAnswer("H0r5eRAD1$h");
-			string a1 = "abcdefg";
-			string a2 = "";
-			string a3 = "H0r5eRAD1$h";
 			vector<string> answers;
-			answers.push_back(a1);
-			answers.push_back(a2);
-			answers.push_back(a3);
+			answers.push_back("abcdefg");
+			answers.push_back("");
+			answers.push_back("H0r5eRAD1$h");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
 			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
@@ -118,13 +115,10 @@ namespace TestCases {
 			question.AddCorrectAnswer("Also removed!");
 			question.RemoveCorrectAnswer("Also removed!");
 			question.AddCorrectAnswer("done");
-			string a1 = "first";
-			string a2 = "second";
-			string a3 = "done";
 			vector<string> answers;
-			answers.push_back(a1);
-			answers.push_back(a2);
-			answers.push_back(a3);
+			answers.push_back("first");
+			answers.push_back("second");
+			answers.push_back("done");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
 			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
 				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
@@ -134,9 +128,8 @@ namespace TestCases {
 		TEST_METHOD(RemoveAnswerWhenNotThere) {
 			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("first");
-			string a1 = "first";
 			vector<string> answers;
-			answers.push_back(a1);
+			answers.push_back("first");
 			question.RemoveCorrectAnswer("Nothing happens");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
 			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
@@ -148,6 +141,31 @@ namespace TestCases {
 			ShortAnswerQuestion question;
 			question.RemoveCorrectAnswer("Nothing happens");
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswersWhenNoneExist) {
+			ShortAnswerQuestion question;
+			question.ClearCorrectAnswers();
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswersWhenSomeExist) {
+			ShortAnswerQuestion question;
+			question.AddCorrectAnswer("forth correct");
+			question.AddCorrectAnswer("second correct");
+			question.AddCorrectAnswer("third correct");
+			question.AddCorrectAnswer("first correct");
+			question.ClearCorrectAnswers();
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswerAndAddNew) {
+			ShortAnswerQuestion question;
+			question.AddCorrectAnswer("forth correct");
+			question.ClearCorrectAnswers();
+			question.AddCorrectAnswer("new answer");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)1);
+			Assert::AreEqual(question.GetCorrectAnswers()[0], (string)"new answer");
 		}
 
 		TEST_METHOD(AnswerQuestionSingleCorrectAnswer) {
@@ -209,31 +227,6 @@ namespace TestCases {
 			}
 		}
 
-		TEST_METHOD(ClearCorrectAnswersWhenNoneExist) {
-			ShortAnswerQuestion question;
-			question.ClearCorrectAnswers();
-			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
-		}
-
-		TEST_METHOD(ClearCorrectAnswersWhenSomeExist) {
-			ShortAnswerQuestion question;
-			question.AddCorrectAnswer("forth correct");
-			question.AddCorrectAnswer("second correct");
-			question.AddCorrectAnswer("third correct");
-			question.AddCorrectAnswer("first correct");
-			question.ClearCorrectAnswers();
-			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
-		}
-
-		TEST_METHOD(ClearCorrectAnswerAndAddNew) {
-			ShortAnswerQuestion question;
-			question.AddCorrectAnswer("forth correct");
-			question.ClearCorrectAnswers();
-			question.AddCorrectAnswer("new answer");
-			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)1);
-			Assert::AreEqual(question.GetCorrectAnswers()[0], (string)"new answer");
-		}
-
 		TEST_METHOD(ClearStudentAnswerWhenThereAreNone) {
 			ShortAnswerQuestion question;
 			question.AddCorrectAnswer("correct");
@@ -283,6 +276,12 @@ namespace TestCases {
 		TEST_METHOD(SetAvailablePointsContainsSpaces) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("10, 8, 6, 4, 2");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsTwoPeriods) {
+			ShortAnswerQuestion question;
+			question.SetAvailablePoints("10, 5.5, 6.2, 4, 2..1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
 		}
 
@@ -432,6 +431,598 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(GetSetPermittedAbsoluteError) {
+			NumericalQuestion question;
+			question.SetPermittedAbsoluteError(5.1);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 5.1);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(GetSetPermittedRelativeError) {
+			NumericalQuestion question;
+			question.SetPermittedRelativeError(0.078);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.078);
+		}
+
+		TEST_METHOD(GetSetQuestion) {
+			NumericalQuestion question;
+			question.SetQuestion("What is 5 + 5?");
+			string q_text = "What is 5 + 5?";
+			Assert::AreEqual(question.GetQuestion(), q_text);
+		}
+
+		TEST_METHOD(GetSetQuestionEmpty) {
+			NumericalQuestion question;
+			question.SetQuestion("");
+			string empty = "";
+			Assert::AreEqual(question.GetQuestion(), empty);
+		}
+
+		TEST_METHOD(GetSetQuestionLength1) {
+			NumericalQuestion question("Should be gone");
+			question.SetQuestion("5");
+			string q_text = "5";
+			Assert::AreEqual(question.GetQuestion(), q_text);
+		}
+
+		TEST_METHOD(FailToAddEmptyStringAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddSpaceAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer(" ");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddWordAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("aeftrser");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddNumberWithLetterAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5a");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddNumberWithSymbolAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("2.1!");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddMixOfCharactersAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("UIH8efhfrui9#*9e");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddNumberWithTwoPeriodsAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5.3.1");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(AddIntegerAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("8");
+			vector<string> answers;
+			answers.push_back("8");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < answers.size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(AddDoubleAsCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("3.1415");
+			vector<string> answers;
+			answers.push_back("3.1415");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < answers.size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(AddMultipleCorrectAnswers) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("8");
+			question.AddCorrectAnswer("3.1415");
+			question.AddCorrectAnswer("1.1");
+			question.AddCorrectAnswer("1.1");
+			vector<string> answers;
+			answers.push_back("8");
+			answers.push_back("3.1415");
+			answers.push_back("1.1");
+			answers.push_back("1.1");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < answers.size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(AddNegativeCorrectAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("-3.89");
+			vector<string> answers;
+			answers.push_back("-3.89");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < answers.size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(FailToAddCorrectAnswersWithMultipleNegativeSignsOrNegativeSignsInWrongPlaces) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("--3.89");
+			question.AddCorrectAnswer("5-2");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(FailToAddCorrectAnswerThatIsJustNegativeSign) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("-");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(AddMultipleCorrectAnswersAndFailToAddSome) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("banana");
+			question.AddCorrectAnswer("8");
+			question.AddCorrectAnswer("");
+			question.AddCorrectAnswer(" ");
+			question.AddCorrectAnswer("3.1415");
+			question.AddCorrectAnswer("!@#$%^&*()");
+			question.AddCorrectAnswer("1.1");
+			question.AddCorrectAnswer("3..4");
+			question.AddCorrectAnswer("1.1");
+			question.AddCorrectAnswer("dfhzzudo8s5hys78ghu78ghEF7");
+			vector<string> answers;
+			answers.push_back("8");
+			answers.push_back("3.1415");
+			answers.push_back("1.1");
+			answers.push_back("1.1");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < answers.size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(RemoveAnswersSingleAnswer) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5");
+			question.RemoveCorrectAnswer("5");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(AddGetRemoveAnswersThreeAnswers) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("3.14");
+			question.AddCorrectAnswer("2.57");
+			question.AddCorrectAnswer("10");
+			question.RemoveCorrectAnswer("2.57");
+			vector<string> answers;
+			answers.push_back("3.14");
+			answers.push_back("10");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); ++i) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(AddGetRemoveAnswersAddAndRemoveAnswers) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("1");
+			question.AddCorrectAnswer("2");
+			question.AddCorrectAnswer("3");
+			question.RemoveCorrectAnswer("3");
+			question.AddCorrectAnswer("4");
+			question.RemoveCorrectAnswer("4");
+			question.AddCorrectAnswer("5");
+			vector<string> answers;
+			answers.push_back("1");
+			answers.push_back("2");
+			answers.push_back("5");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(RemoveAnswerWhenNotThere) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5");
+			vector<string> answers;
+			answers.push_back("5");
+			question.RemoveCorrectAnswer("2");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), answers.size());
+			for (unsigned i = 0; i < question.GetCorrectAnswers().size(); i++) {
+				Assert::AreEqual(question.GetCorrectAnswers()[i], answers[i]);
+			}
+		}
+
+		TEST_METHOD(RemoveAnswerWhenNotThereTwo) {
+			NumericalQuestion question;
+			question.RemoveCorrectAnswer("5");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswersWhenNoneExist) {
+			NumericalQuestion question;
+			question.ClearCorrectAnswers();
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswersWhenSomeExist) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5.5");
+			question.AddCorrectAnswer("1.23");
+			question.AddCorrectAnswer("-5");
+			question.AddCorrectAnswer("0");
+			question.ClearCorrectAnswers();
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearCorrectAnswerAndAddNew) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5");
+			question.ClearCorrectAnswers();
+			question.AddCorrectAnswer("3");
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)1);
+			Assert::AreEqual(question.GetCorrectAnswers()[0], (string)"3");
+		}
+
+		TEST_METHOD(SubmitSingleAnswerExactlyCorrect) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5.1689");
+			question.SetAvailablePoints("5,3,1");
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("5.1689", true));
+
+			Assert::IsTrue(question.SubmitStudentAnswer("5.1689"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerWithinAbsoluteAndRelativeErrorLimits) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5.1689");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(0.01);
+			question.SetPermittedRelativeError(0.002);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("5.16", true));
+
+			Assert::IsTrue(question.SubmitStudentAnswer("5.16"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerWithinAbsoluteErrorLimitsNotCareAboutRelative) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("1000.0");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(10.0);
+			question.SetPermittedRelativeError(-1);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("1009.999", true));
+
+			Assert::IsTrue(question.SubmitStudentAnswer("1009.999"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerWithinRelativeErrorLimitsNotCareAboutAbsolute) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("-21489.349");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(-439889.489389);
+			question.SetPermittedRelativeError(0.001);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("-21469.8505", true));
+
+			Assert::IsTrue(question.SubmitStudentAnswer("-21469.8505"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		//Any answer will be right in this case
+		TEST_METHOD(SubmitSingleAnswerNotCareAboutRelativeOrAbsoluteError) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("432690930");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(-0.37);
+			question.SetPermittedRelativeError(-2);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("-0.328957", true));
+
+			Assert::IsTrue(question.SubmitStudentAnswer("-0.328957"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 5.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerCareAboutBothAbsoluteAndRelativeErrorAndHaveTooMuchAbsoluteError) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("-21489.349");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(19.49);
+			question.SetPermittedRelativeError(0.001);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("-21469.8505", false));
+
+			Assert::IsFalse(question.SubmitStudentAnswer("-21469.8505"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerCareAboutBothAbsoluteAndRelativeErrorAndHaveTooMuchRelativeError) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("1000.0");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(10.0);
+			question.SetPermittedRelativeError(0.0099);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("1009.999", false));
+
+			Assert::IsFalse(question.SubmitStudentAnswer("1009.999"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerCareAboutBothAbsoluteAndRelativeErrorAndHaveTooMuchOfBoth) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("-0.000218");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(0.000001);
+			question.SetPermittedRelativeError(0.00499);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("-0.00021691", false));
+
+			Assert::IsFalse(question.SubmitStudentAnswer("-0.00021691"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerCareAboutAbsoluteErrorOnlyAndHaveTooMuch) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("0.000000001");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(0.0000000005);
+			question.SetPermittedRelativeError(-293573948);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("0.0000000016", false));
+
+			Assert::IsFalse(question.SubmitStudentAnswer("0.0000000016"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(SubmitSingleAnswerCareAboutRelativeErrorOnlyAndHaveTooMuch) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("8934956759948.5");
+			question.SetAvailablePoints("5,3,1");
+			question.SetPermittedAbsoluteError(-1);
+			question.SetPermittedRelativeError(0.05);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
+
+			Assert::IsFalse(question.SubmitStudentAnswer("9381704597946"));
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(SubmitMultipleAnswers) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("100.0");
+			question.SetAvailablePoints("5,4,3,2,1");
+			question.SetPermittedAbsoluteError(5.0);
+			question.SetPermittedRelativeError(0.05);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
+			expected_student_answers.push_back(pair<string, bool>("101.54893489", true));
+			expected_student_answers.push_back(pair<string, bool>("95", true));
+			expected_student_answers.push_back(pair<string, bool>("105.0", true));
+			expected_student_answers.push_back(pair<string, bool>("94.999", false));
+
+
+			Assert::IsFalse(question.SubmitStudentAnswer("9381704597946"));
+			Assert::IsTrue(question.SubmitStudentAnswer("101.54893489"));
+			Assert::IsTrue(question.SubmitStudentAnswer("95"));
+			Assert::IsTrue(question.SubmitStudentAnswer("105.0"));
+			Assert::IsFalse(question.SubmitStudentAnswer("94.999"));
+
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 4.0);
+		}
+
+		TEST_METHOD(SubmitMultipleAnswersRanOutOfAttempts) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("100.0");
+			question.SetAvailablePoints("5,3");
+			question.SetPermittedAbsoluteError(5.0);
+			question.SetPermittedRelativeError(0.05);
+
+			vector<pair<string, bool>> expected_student_answers;
+			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
+			expected_student_answers.push_back(pair<string, bool>("94.999", false));
+			expected_student_answers.push_back(pair<string, bool>("101.54893489", true));
+			expected_student_answers.push_back(pair<string, bool>("95", true));
+			expected_student_answers.push_back(pair<string, bool>("105.0", true));
+
+
+			Assert::IsFalse(question.SubmitStudentAnswer("9381704597946"));
+			Assert::IsFalse(question.SubmitStudentAnswer("94.999"));
+			Assert::IsTrue(question.SubmitStudentAnswer("101.54893489"));
+			Assert::IsTrue(question.SubmitStudentAnswer("95"));
+			Assert::IsTrue(question.SubmitStudentAnswer("105.0"));
+
+			Assert::AreEqual(question.GetStudentAnswers().size(), expected_student_answers.size());
+			for (unsigned i = 0; i < expected_student_answers.size(); i++) {
+				Assert::AreEqual(question.GetStudentAnswers()[i].first, expected_student_answers[i].first);
+				Assert::AreEqual(question.GetStudentAnswers()[i].second, expected_student_answers[i].second);
+			}
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+		}
+
+		TEST_METHOD(ClearStudentAnswerWhenThereAreNone) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5");
+			question.ClearStudentAnswers();
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearStudentAnswersWhenThereAreTwo) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("5");
+			question.SubmitStudentAnswer("6");
+			question.SubmitStudentAnswer("5");
+			question.ClearStudentAnswers();
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+		}
+
+		TEST_METHOD(ClearStudentAnswersAndAddNewOne) {
+			NumericalQuestion question;
+			question.AddCorrectAnswer("2.0");
+			question.SubmitStudentAnswer("2.0");
+			question.SubmitStudentAnswer("3.0");
+			question.ClearStudentAnswers();
+			question.SubmitStudentAnswer("2.0");
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)1);
+			Assert::AreEqual(question.GetStudentAnswers()[0].first, (string)"2.0");
+			Assert::IsTrue(question.GetStudentAnswers()[0].second);
+		}
+
+		TEST_METHOD(SetAvailablePointsEmptyString) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsCommaOnly) {
+			NumericalQuestion question;
+			question.SetAvailablePoints(",");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsDoubleComma) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("5,4,3,2,,1");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsContainsSpaces) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("10, 8, 6, 4, 2");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsTwoPeriods) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("10, 5.5, 6.2, 4, 2..1");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsContainsLetter) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("5,3,1a");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsContainsSymbol) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("5!,3,2");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+		}
+
+		TEST_METHOD(SetAvailablePointsOneAttemptAllowed) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("5");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)1);
+			Assert::AreEqual(question.GetAvailablePoints()[0], 5.0);
+		}
+
+		TEST_METHOD(SetAvailablePointsFiveAttemptsAllowed) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("10,10,8,5,3");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)5);
+			Assert::AreEqual(question.GetAvailablePoints()[0], 10.0);
+			Assert::AreEqual(question.GetAvailablePoints()[1], 10.0);
+			Assert::AreEqual(question.GetAvailablePoints()[2], 8.0);
+			Assert::AreEqual(question.GetAvailablePoints()[3], 5.0);
+			Assert::AreEqual(question.GetAvailablePoints()[4], 3.0);
+		}
+
+		TEST_METHOD(SetAvailablePointsDecimalValues) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("1.5,0.75,0.5,0.25");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)4);
+			Assert::AreEqual(question.GetAvailablePoints()[0], 1.5);
+			Assert::AreEqual(question.GetAvailablePoints()[1], 0.75);
+			Assert::AreEqual(question.GetAvailablePoints()[2], 0.5);
+			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
 		}
 	};
 }

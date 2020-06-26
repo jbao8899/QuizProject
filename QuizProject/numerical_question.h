@@ -32,4 +32,17 @@ public:
 
 	//Returns the current permitted_relative_error
 	double GetPermittedRelativeError() const;
+
+	//Adds to_add to the vector containing correct answers.
+	// If to_add is not a number, then it is not added to that vector (function returns)
+	void AddCorrectAnswer(string to_add);
+
+	//Used when the student submits an answer. Looks through the vector of correct answers, and if their answer is right,
+	//true is returned, and if it is wrong, false is returned. In either case, we save their answer, along with whether it
+	//was right or not
+	//Any answer which is not a double is wrong.
+	//An answer is right if its absolute error (|correct_answer - student answer|) is less than permitted_absolute_error
+	//and its relative error  (|correct_answer - student answer| / |correct_answer|) is less than permitted_relative_error
+	//If either of those values is negative, it will not be checked. If either is 0, then the student must get the answer exactly right.
+	bool SubmitStudentAnswer(string answer);
 };
