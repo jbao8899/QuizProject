@@ -94,6 +94,15 @@ void Question::SetAvailablePoints(string available_points_string) {
 			available_points_.push_back(stod(num));
 		}
 	}
+
+	for (unsigned i = 1; i < available_points_.size(); i++) {
+		if (available_points_[i - 1] < available_points_[i]) {
+			available_points_.clear();
+			return;
+		}
+	}
+
+	max_possible_score_ = available_points_[0];
 }
 
 const deque<double>& Question::GetAvailablePoints() {
@@ -102,4 +111,8 @@ const deque<double>& Question::GetAvailablePoints() {
 
 double Question::GetCurrentScore() {
 	return current_score_;
+}
+
+double Question::GetMaxPossibleScore() {
+	return max_possible_score_;
 }

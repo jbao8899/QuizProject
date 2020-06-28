@@ -22,6 +22,7 @@ protected:
 	vector<string>             correct_answers_;
 	vector<pair<string, bool>> student_answers_; //string is what the student inputted, bool is if they got it correct
 	double                     current_score_;
+	double                     max_possible_score_; //The maximum value set in the available_points_ deque.
 public:
 	//Changes the question_text_ to set_question
 	virtual void                              SetQuestion(string set_question);
@@ -59,12 +60,17 @@ public:
 	//Clears previous available points vector, if not empty.
 	//If there are 2 or more commas in a row,  if the string is just a single comma, or if 
 	//the string contains any characters besides digits,periods, and commas, then clear the vector and return.
+	//If the numbers are not in descending order (any number in the string is strictly less than the next one), then
+	//clear the vector and return.
 	//Also clear the vector and return if there are 2 or more periods in any of the numbers.
 	virtual void                              SetAvailablePoints(string available_points_string);
 
 	//Returns a constant reference to the vector of available points
 	virtual const deque<double>&              GetAvailablePoints();
 
-	//Returns the current score
+	//Returns the current_score_
 	virtual double                            GetCurrentScore();
+
+	//Returns the max_possible_score_
+	virtual double                            GetMaxPossibleScore();
 };

@@ -4,11 +4,13 @@
 ShortAnswerQuestion::ShortAnswerQuestion() {
 	question_text_ = "";
 	current_score_ = 0.0;
+	max_possible_score_ = 0.0;
 }
 
 ShortAnswerQuestion::ShortAnswerQuestion(string set_question) {
 	question_text_ = set_question;
 	current_score_ = 0.0;
+	max_possible_score_ = 0.0;
 }
 
 bool ShortAnswerQuestion::SubmitStudentAnswer(string answer) {

@@ -6,6 +6,7 @@ NumericalQuestion::NumericalQuestion() {
 	current_score_ = 0.0;
 	permitted_absolute_error_ = 0.0;
 	permitted_relative_error_ = 0.0;
+	max_possible_score_ = 0.0;
 }
 
 NumericalQuestion::NumericalQuestion(string set_question) {
@@ -13,6 +14,7 @@ NumericalQuestion::NumericalQuestion(string set_question) {
 	current_score_ = 0.0;
 	permitted_absolute_error_ = 0.0;
 	permitted_relative_error_ = 0.0;
+	max_possible_score_ = 0.0;
 }
 
 void NumericalQuestion::SetPermittedAbsoluteError(double set_permitted_absolute_error) {

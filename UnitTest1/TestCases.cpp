@@ -30,6 +30,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorEmptyString) {
@@ -40,6 +41,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructorLengthOneString) {
@@ -50,6 +52,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(CustomQuestionConstructor) {
@@ -60,6 +63,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(GetSetQuestion) {
@@ -259,46 +263,67 @@ namespace TestCases {
 			Assert::IsTrue(question.GetStudentAnswers()[0].second);
 		}
 
-		TEST_METHOD(SetAvailablePointsEmptyString) {
+		TEST_METHOD(FailToSetAvailablePointsEmptyString) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsCommaOnly) {
+		TEST_METHOD(FailToSetAvailablePointsCommaOnly) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints(",");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsDoubleComma) {
+		TEST_METHOD(FailToSetAvailablePointsDoubleComma) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5,4,3,2,,1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsSpaces) {
+		TEST_METHOD(FailToSetAvailablePointsContainsSpaces) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("10, 8, 6, 4, 2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsTwoPeriods) {
+		TEST_METHOD(FailToSetAvailablePointsTwoPeriods) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("10, 5.5, 6.2, 4, 2..1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsLetter) {
+		TEST_METHOD(FailToFailToSetAvailablePointsContainsLetter) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5,3,1a");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsSymbol) {
+		TEST_METHOD(FailToSetAvailablePointsContainsSymbol) {
 			ShortAnswerQuestion question;
 			question.SetAvailablePoints("5!,3,2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+		}
+
+		TEST_METHOD(FailToSetAvailablePointsScoresNotDescendingOrder) {
+			ShortAnswerQuestion question;
+			question.SetAvailablePoints("10,9,8,7,6,7,4,3,2,1");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+		}
+
+		TEST_METHOD(FailToSetAvailablePointsScoresAscendingOrder) {
+			ShortAnswerQuestion question;
+			question.SetAvailablePoints("0.1,0.2,0.3,0.4,0.5");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsOneAttemptAllowed) {
@@ -306,6 +331,7 @@ namespace TestCases {
 			question.SetAvailablePoints("5");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)1);
 			Assert::AreEqual(question.GetAvailablePoints()[0], 5.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 5.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsFiveAttemptsAllowed) {
@@ -317,6 +343,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetAvailablePoints()[2], 8.0);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 5.0);
 			Assert::AreEqual(question.GetAvailablePoints()[4], 3.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 10.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsDecimalValues) {
@@ -327,6 +354,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetAvailablePoints()[1], 0.75);
 			Assert::AreEqual(question.GetAvailablePoints()[2], 0.5);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 1.5);
 		}
 
 		TEST_METHOD(AnswerQuestionsPointsCorrectFirstTry) {
@@ -396,6 +424,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
@@ -408,6 +437,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
@@ -420,6 +450,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 
@@ -433,6 +464,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
@@ -959,46 +991,67 @@ namespace TestCases {
 			Assert::IsTrue(question.GetStudentAnswers()[0].second);
 		}
 
-		TEST_METHOD(SetAvailablePointsEmptyString) {
+		TEST_METHOD(FailToSetAvailablePointsEmptyString) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsCommaOnly) {
+		TEST_METHOD(FailToSetAvailablePointsCommaOnly) {
 			NumericalQuestion question;
 			question.SetAvailablePoints(",");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsDoubleComma) {
+		TEST_METHOD(FailToSetAvailablePointsDoubleComma) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("5,4,3,2,,1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsSpaces) {
+		TEST_METHOD(FailToSetAvailablePointsContainsSpaces) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("10, 8, 6, 4, 2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsTwoPeriods) {
+		TEST_METHOD(FailToSetAvailablePointsTwoPeriods) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("10, 5.5, 6.2, 4, 2..1");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsLetter) {
+		TEST_METHOD(FailToFailToSetAvailablePointsContainsLetter) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("5,3,1a");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
-		TEST_METHOD(SetAvailablePointsContainsSymbol) {
+		TEST_METHOD(FailToSetAvailablePointsContainsSymbol) {
 			NumericalQuestion question;
 			question.SetAvailablePoints("5!,3,2");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+		}
+
+		TEST_METHOD(FailToSetAvailablePointsScoresNotDescendingOrder) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("10,9,8,7,6,7,4,3,2,1");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+		}
+
+		TEST_METHOD(FailToSetAvailablePointsScoresAscendingOrder) {
+			NumericalQuestion question;
+			question.SetAvailablePoints("0.1,0.2,0.3,0.4,0.5");
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsOneAttemptAllowed) {
@@ -1006,6 +1059,7 @@ namespace TestCases {
 			question.SetAvailablePoints("5");
 			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)1);
 			Assert::AreEqual(question.GetAvailablePoints()[0], 5.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 5.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsFiveAttemptsAllowed) {
@@ -1017,6 +1071,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetAvailablePoints()[2], 8.0);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 5.0);
 			Assert::AreEqual(question.GetAvailablePoints()[4], 3.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 10.0);
 		}
 
 		TEST_METHOD(SetAvailablePointsDecimalValues) {
@@ -1027,57 +1082,57 @@ namespace TestCases {
 			Assert::AreEqual(question.GetAvailablePoints()[1], 0.75);
 			Assert::AreEqual(question.GetAvailablePoints()[2], 0.5);
 			Assert::AreEqual(question.GetAvailablePoints()[3], 0.25);
-		}
-	};
+			Assert::AreEqual(question.GetMaxPossibleScore(), 1.5);
+		}	};
 
-	TEST_CLASS(QuestionKeyTests) {
-	public:
-		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndex) {
-			QuestionKey key_one(3, "apples");
-			QuestionKey key_two(3, "oranges");
-			Assert::IsTrue(key_one == key_two);
-		}
+	//TEST_CLASS(QuestionKeyTests) {
+	//public:
+	//	TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndex) {
+	//		QuestionKey key_one(3, "apples");
+	//		QuestionKey key_two(3, "oranges");
+	//		Assert::IsTrue(key_one == key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionIndex) {
-			QuestionKey key_one(3, "apples");
-			QuestionKey key_two(3, "oranges");
-			Assert::IsFalse(key_one != key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionIndex) {
+	//		QuestionKey key_one(3, "apples");
+	//		QuestionKey key_two(3, "oranges");
+	//		Assert::IsFalse(key_one != key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionLabel) {
-			QuestionKey key_one(347867845, "UY5848&878efy&4t");
-			QuestionKey key_two(-17, "UY5848&878efy&4t");
-			Assert::IsTrue(key_one == key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionLabel) {
+	//		QuestionKey key_one(347867845, "UY5848&878efy&4t");
+	//		QuestionKey key_two(-17, "UY5848&878efy&4t");
+	//		Assert::IsTrue(key_one == key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionLabel) {
-			QuestionKey key_one(347867845, "UY5848&878efy&4t");
-			QuestionKey key_two(-17, "UY5848&878efy&4t");
-			Assert::IsFalse(key_one != key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysNotDifferentIfSameQuestionLabel) {
+	//		QuestionKey key_one(347867845, "UY5848&878efy&4t");
+	//		QuestionKey key_two(-17, "UY5848&878efy&4t");
+	//		Assert::IsFalse(key_one != key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndexAndQuestionLabel) {
-			QuestionKey key_one(57, "word");
-			QuestionKey key_two(57, "word");
-			Assert::IsTrue(key_one == key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysEqualIfSameQuestionIndexAndQuestionLabel) {
+	//		QuestionKey key_one(57, "word");
+	//		QuestionKey key_two(57, "word");
+	//		Assert::IsTrue(key_one == key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysNotDifferentIfSameSameQuestionIndexAndQuestionLabel) {
-			QuestionKey key_one(57, "word");
-			QuestionKey key_two(57, "word");
-			Assert::IsFalse(key_one != key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysNotDifferentIfSameSameQuestionIndexAndQuestionLabel) {
+	//		QuestionKey key_one(57, "word");
+	//		QuestionKey key_two(57, "word");
+	//		Assert::IsFalse(key_one != key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysNotEqualIfDifferentQuestionIndexAndQuestionLabel) {
-			QuestionKey key_one(1, "banana");
-			QuestionKey key_two(0, "bananna");
-			Assert::IsFalse(key_one == key_two);
-		}
+	//	TEST_METHOD(TwoQuestionKeysNotEqualIfDifferentQuestionIndexAndQuestionLabel) {
+	//		QuestionKey key_one(1, "banana");
+	//		QuestionKey key_two(0, "bananna");
+	//		Assert::IsFalse(key_one == key_two);
+	//	}
 
-		TEST_METHOD(TwoQuestionKeysDifferentIfIfDifferentQuestionIndexAndQuestionLabel) {
-			QuestionKey key_one(1, "banana");
-			QuestionKey key_two(0, "bananna");
-			Assert::IsTrue(key_one != key_two);
-		}
-	};
+	//	TEST_METHOD(TwoQuestionKeysDifferentIfIfDifferentQuestionIndexAndQuestionLabel) {
+	//		QuestionKey key_one(1, "banana");
+	//		QuestionKey key_two(0, "bananna");
+	//		Assert::IsTrue(key_one != key_two);
+	//	}
+	//};
 }
