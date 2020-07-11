@@ -116,3 +116,7 @@ double Question::GetCurrentScore() {
 double Question::GetMaxPossibleScore() {
 	return max_possible_score_;
 }
+
+int Question::GetQuestionNumber() {
+	return question_number_;
+}

@@ -17,7 +17,7 @@ int main()
 	string q_text;
 	cout << "Enter a question" << endl;
 	getline(cin, q_text);
-	ShortAnswerQuestion q;
+	ShortAnswerQuestion q(5);
 	q.SetQuestion(q_text);
 	cout << "Enter some answers" << endl;
 	while (true) {

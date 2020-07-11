@@ -1,36 +1,38 @@
 #include "pch.h"
 #include "numerical_question.h"
 
-NumericalQuestion::NumericalQuestion() {
+NumericalQuestion::NumericalQuestion(int set_question_number) {
 	question_text_ = "";
 	current_score_ = 0.0;
-	permitted_absolute_error_ = 0.0;
-	permitted_relative_error_ = 0.0;
+	max_permitted_absolute_error_ = 0.0;
+	max_permitted_relative_error_ = 0.0;
 	max_possible_score_ = 0.0;
+	question_number_ = set_question_number;
 }
 
-NumericalQuestion::NumericalQuestion(string set_question) {
+NumericalQuestion::NumericalQuestion(int set_question_number, string set_question) {
 	question_text_ = set_question;
 	current_score_ = 0.0;
-	permitted_absolute_error_ = 0.0;
-	permitted_relative_error_ = 0.0;
+	max_permitted_absolute_error_ = 0.0;
+	max_permitted_relative_error_ = 0.0;
 	max_possible_score_ = 0.0;
+	question_number_ = set_question_number;
 }
 
 void NumericalQuestion::SetPermittedAbsoluteError(double set_permitted_absolute_error) {
-	permitted_absolute_error_ = set_permitted_absolute_error;
+	max_permitted_absolute_error_ = set_permitted_absolute_error;
 }
 
 double NumericalQuestion::GetPermittedAbsoluteError() const {
-	return permitted_absolute_error_;
+	return max_permitted_absolute_error_;
 }
 
 void NumericalQuestion::SetPermittedRelativeError(double set_permitted_relative_error) {
-	permitted_relative_error_ = set_permitted_relative_error;
+	max_permitted_relative_error_ = set_permitted_relative_error;
 }
 
 double NumericalQuestion::GetPermittedRelativeError() const {
-	return permitted_relative_error_;
+	return max_permitted_relative_error_;
 }
 
 void NumericalQuestion::AddCorrectAnswer(string to_add) {
@@ -70,12 +72,12 @@ bool NumericalQuestion::SubmitStudentAnswer(string answer) {
 	}
 
 	bool absolute_error_matters = true;
-	if (permitted_absolute_error_ < 0) {
+	if (max_permitted_absolute_error_ < 0) {
 		absolute_error_matters = false;
 	}
 
 	bool relative_error_matters = true;
-	if (permitted_relative_error_ < 0) {
+	if (max_permitted_relative_error_ < 0) {
 		relative_error_matters = false;
 	}
 
@@ -88,11 +90,11 @@ bool NumericalQuestion::SubmitStudentAnswer(string answer) {
 			break;
 		}
 
-		//If you do not care about absolute error or if your absolute error does not exceed the permitted_absolute_error_
-		// and if you do not care about relative error or if your relative error does not exceed the permitted_relative_error_,
+		//If you do not care about absolute error or if your absolute error does not exceed the max_permitted_absolute_error_
+		// and if you do not care about relative error or if your relative error does not exceed the max_permitted_relative_error_,
 		// then you got the question right.
-		if ((!absolute_error_matters || abs(stod(correct_answers_[i]) - answer_as_double)  <= permitted_absolute_error_)
-			&& (!relative_error_matters || abs(stod(correct_answers_[i]) - answer_as_double) / abs(stod(correct_answers_[i])) <= permitted_relative_error_)) {
+		if ((!absolute_error_matters || abs(stod(correct_answers_[i]) - answer_as_double)  <= max_permitted_absolute_error_)
+			&& (!relative_error_matters || abs(stod(correct_answers_[i]) - answer_as_double) / abs(stod(correct_answers_[i])) <= max_permitted_relative_error_)) {
 			answer_was_correct = true;
 			break;
 		}
@@ -107,4 +109,48 @@ bool NumericalQuestion::SubmitStudentAnswer(string answer) {
 
 	student_answers_.push_back(pair<string, bool>(answer, answer_was_correct));
 	return answer_was_correct;
+}
+
+bool NumericalQuestion::operator==(const NumericalQuestion& other) const {
+	if (question_text_ != other.question_text_
+		|| current_score_ != other.current_score_
+		|| max_possible_score_ != other.max_possible_score_
+		|| question_number_ != other.question_number_
+		|| max_permitted_absolute_error_ != other.max_permitted_absolute_error_
+		|| max_permitted_relative_error_ != other.max_permitted_relative_error_) {
+		return false;
+	}
+
+	if (available_points_.size() != other.available_points_.size()) {
+		return false;
+	}
+	for (unsigned i = 0; i < available_points_.size(); i++) {
+		if (available_points_[i] != other.available_points_[i]) {
+			return false;
+		}
+	}
+
+	if (correct_answers_.size() != other.correct_answers_.size()) {
+		return false;
+	}
+	for (unsigned i = 0; i < correct_answers_.size(); i++) {
+		if (correct_answers_[i] != other.correct_answers_[i]) {
+			return false;
+		}
+	}
+
+	if (student_answers_.size() != other.student_answers_.size()) {
+		return false;
+	}
+	for (unsigned i = 0; i < student_answers_.size(); i++) {
+		if (student_answers_[i] != other.student_answers_[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool NumericalQuestion::operator!=(const NumericalQuestion& other) const {
+	return (!(*this == other));
 }

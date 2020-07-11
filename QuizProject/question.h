@@ -23,6 +23,7 @@ protected:
 	vector<pair<string, bool>> student_answers_; //string is what the student inputted, bool is if they got it correct
 	double                     current_score_;
 	double                     max_possible_score_; //The maximum value set in the available_points_ deque.
+	int					       question_number_;
 public:
 	//Changes the question_text_ to set_question
 	virtual void                              SetQuestion(string set_question);
@@ -73,4 +74,7 @@ public:
 
 	//Returns the max_possible_score_
 	virtual double                            GetMaxPossibleScore();
+
+	//Returns the question_number_.
+	virtual int                               GetQuestionNumber();
 };
