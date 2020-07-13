@@ -1,4 +1,3 @@
-//#include "pch.h"
 #include "test.h"
 
 Test::Test(string set_name_of_test) {

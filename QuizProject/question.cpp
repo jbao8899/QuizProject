@@ -1,4 +1,3 @@
-//#include "pch.h"
 #include "question.h"
 
 void Question::SetQuestion(string set_question) {

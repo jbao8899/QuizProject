@@ -1,4 +1,3 @@
-//#include "pch.h"
 #include "short_answer_question.h"
 
 ShortAnswerQuestion::ShortAnswerQuestion(int set_question_number) {

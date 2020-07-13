@@ -1,4 +1,3 @@
-//#include "pch.h"
 #include "question_key.h"
 
 QuestionKey::QuestionKey(int set_question_index, string set_question_label) {

@@ -1,4 +1,3 @@
-//#include "pch.h"
 #include "numerical_question.h"
 
 NumericalQuestion::NumericalQuestion(int set_question_number) {
