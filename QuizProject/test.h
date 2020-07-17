@@ -16,7 +16,6 @@ using std::swap;
 using std::tuple;
 using std::weak_ptr;
 
-// TODO: Make function take string instead of int.
 class Test {
 private:
 	string                                                   name_of_test_;
@@ -127,4 +126,8 @@ public:
 	//If number_of_questions is not a vald int, then nothing will be done.
 	//If number_of_questions contains any characters besides digits or is empty, then does nothing and returns.
 	void ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string);
+
+	//Iterates through all Questions in assigned_questions_, adds up the max scores available on each, then returns that.
+	//If assigned_questions_ is empty, returns 0.
+	double GetMaxAvailableScore();
 };

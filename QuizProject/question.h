@@ -21,9 +21,9 @@ protected:
 	deque<double>			   available_points_;
 	vector<string>             correct_answers_;
 	vector<pair<string, bool>> student_answers_; //string is what the student inputted, bool is if they got it correct
-	double                     current_score_;
-	double                     max_possible_score_; //The maximum value set in the available_points_ deque.
-	int					       question_number_;
+	double                     current_score_ = 0;
+	double                     max_possible_score_ = 0; //The maximum value set in the available_points_ deque.
+	int					       question_number_ = 0;
 public:
 	//Changes the question_text_ to set_question
 	virtual void                              SetQuestion(string set_question);

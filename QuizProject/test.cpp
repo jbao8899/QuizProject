@@ -254,3 +254,13 @@ void Test::ChangeNumberOfQuestionsToAskFromCategory(string category_name, string
 		}
 	}
 }
+
+double Test::GetMaxAvailableScore() {
+	double max_available_score = 0;
+	for (unsigned i = 0; i < assigned_questions_.size(); ++i) {
+		for (unsigned j = 0; j < get<2>(assigned_questions_[i]).size(); ++j) {
+			max_available_score += get<2>(assigned_questions_[i])[j]->GetMaxPossibleScore();
+		}
+	}
+	return max_available_score;
+}
