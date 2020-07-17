@@ -7,6 +7,14 @@
 #include <utility>
 #include <vector>
 
+#include "cereal/access.hpp"
+#include "cereal/archives/portable_binary.hpp"
+#include "cereal/types/deque.hpp"
+#include "cereal/types/memory.hpp"
+#include "cereal/types/string.hpp"
+#include "cereal/types/utility.hpp" //pair????????
+#include "cereal/types/vector.hpp"
+
 using std::abs;
 using std::count;
 using std::deque;
@@ -77,4 +85,9 @@ public:
 
 	//Returns the question_number_.
 	virtual int                               GetQuestionNumber();
+
+	template <class Archive>
+	void serialize(Archive& ar) {
+		ar(question_text_, available_points_, correct_answers_, student_answers_, current_score_, max_possible_score_, question_number_);
+	}
 };

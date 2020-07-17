@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include <string>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 
 //Must include .cpp files for some reason once added inheritance
@@ -16,15 +17,32 @@
 #include "../QuizProject/test.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using std::string;
-using std::vector;
+
 using std::cout;
 using std::endl;
+using std::ifstream;
+using std::ofstream;
+using std::string;
+using std::vector;
+
+//TODO:: test serialization
 
 namespace TestCases {
 	TEST_CLASS(ShortAnswerQuestionTests) {
 	public:
 		TEST_METHOD(DefaultConstructor) {
+			ShortAnswerQuestion question;
+			string empty = "";
+			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+			Assert::AreEqual(question.GetQuestionNumber(), 0);
+		}
+
+		TEST_METHOD(ConstructorTakingOnlyQuestionNumber) {
 			ShortAnswerQuestion question(3);
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
@@ -674,11 +692,69 @@ namespace TestCases {
 			second_question.SubmitStudentAnswer("a");
 			Assert::IsFalse(first_question != second_question);
 		}
-		};
 
-		TEST_CLASS(NumericalQuestionTests) {
+		TEST_METHOD(SaveAndLoadShortAnswerQuestion) {
+			{
+				ShortAnswerQuestion question(73, "What are the primary colors?");
+				question.AddCorrectAnswer("red");
+				question.AddCorrectAnswer("blue");
+				question.AddCorrectAnswer("yellow");
+				question.SetAvailablePoints("1.5,0.75,0.5,0.25");
+				question.SubmitStudentAnswer("purple");
+				question.SubmitStudentAnswer("RED");
+				question.SubmitStudentAnswer("yellow");
+
+				ofstream os;
+				os.open("testing.txt");
+
+				cereal::PortableBinaryOutputArchive oarchive(os);
+
+				oarchive(question);
+				os.close();
+			}
+
+			{
+				ShortAnswerQuestion same_as_question(73, "What are the primary colors?");
+				same_as_question.AddCorrectAnswer("red");
+				same_as_question.AddCorrectAnswer("blue");
+				same_as_question.AddCorrectAnswer("yellow");
+				same_as_question.SetAvailablePoints("1.5,0.75,0.5,0.25");
+				same_as_question.SubmitStudentAnswer("purple");
+				same_as_question.SubmitStudentAnswer("RED");
+				same_as_question.SubmitStudentAnswer("yellow");
+
+				ifstream is;
+				is.open("testing.txt");
+				cereal::PortableBinaryInputArchive iarchive(is);
+
+				ShortAnswerQuestion question;
+
+				iarchive(question);
+
+				is.close();
+
+				Assert::IsTrue(question == same_as_question);
+			}
+		}
+	};
+
+	TEST_CLASS(NumericalQuestionTests) {
 	public:
 		TEST_METHOD(DefaultConstructor) {
+			NumericalQuestion question;
+			string empty = "";
+			Assert::AreEqual(question.GetQuestion(), empty);
+			Assert::AreEqual(question.GetAvailablePoints().size(), (size_t)0);
+			Assert::AreEqual(question.GetCorrectAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
+			Assert::AreEqual(question.GetCurrentScore(), 0.0);
+			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+			Assert::AreEqual(question.GetQuestionNumber(), 0);
+		}
+
+		TEST_METHOD(ConstructorTakingOnlyQuestionNumber) {
 			NumericalQuestion question(4346);
 			string empty = "";
 			Assert::AreEqual(question.GetQuestion(), empty);
@@ -1648,6 +1724,48 @@ namespace TestCases {
 			second_question.SubmitStudentAnswer("10");
 			second_question.SubmitStudentAnswer("5");
 			Assert::IsFalse(first_question != second_question);
+		}
+
+		TEST_METHOD(SaveAndLoadNumericalQuestion) {
+			{
+				NumericalQuestion question(1, "What is the square root of 4?");
+				question.AddCorrectAnswer("2");
+				question.AddCorrectAnswer("-2");
+				question.SetAvailablePoints("1.5,0.75,0.5,0.25");
+				question.SubmitStudentAnswer("3");
+				question.SubmitStudentAnswer("2");
+				question.SubmitStudentAnswer("jiersjgiij");
+
+				ofstream os;
+				os.open("testing.txt");
+
+				cereal::PortableBinaryOutputArchive oarchive(os);
+
+				oarchive(question);
+				os.close();
+			}
+
+			{
+				NumericalQuestion same_as_question(1, "What is the square root of 4?");
+				same_as_question.AddCorrectAnswer("2");
+				same_as_question.AddCorrectAnswer("-2");
+				same_as_question.SetAvailablePoints("1.5,0.75,0.5,0.25");
+				same_as_question.SubmitStudentAnswer("3");
+				same_as_question.SubmitStudentAnswer("2");
+				same_as_question.SubmitStudentAnswer("jiersjgiij");
+
+				ifstream is;
+				is.open("testing.txt");
+				cereal::PortableBinaryInputArchive iarchive(is);
+
+				NumericalQuestion question;
+
+				iarchive(question);
+
+				is.close();
+
+				Assert::IsTrue(question == same_as_question);
+			}
 		}
 	};
 

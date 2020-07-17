@@ -1,5 +1,9 @@
 #include "numerical_question.h"
 
+NumericalQuestion::NumericalQuestion() {
+	
+}
+
 NumericalQuestion::NumericalQuestion(int set_question_number) {
 	question_text_ = "";
 	current_score_ = 0.0;

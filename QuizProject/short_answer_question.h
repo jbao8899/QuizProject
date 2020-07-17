@@ -5,6 +5,9 @@ using std::transform;
 
 class ShortAnswerQuestion : public Question {
 public:
+	//Default constructor that sets nothing.
+	ShortAnswerQuestion();
+
 	//Create a ShortAnswerQuestion object with a question_text_ of "", an empty deque for available_points_
 	// empty vectors for correct_answers_ and student answers, and a current score of 0
 	ShortAnswerQuestion(int set_question_number);
@@ -23,4 +26,12 @@ public:
 	bool operator==(const ShortAnswerQuestion& other) const;
 
 	bool operator!=(const ShortAnswerQuestion& other) const;
+
+	template <class Archive>
+	void serialize(Archive& ar) {
+		ar(cereal::base_class<Question>(this));
+	}
 };
+
+CEREAL_REGISTER_TYPE(ShortAnswerQuestion)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Question, ShortAnswerQuestion)

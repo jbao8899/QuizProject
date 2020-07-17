@@ -1,5 +1,9 @@
 #include "short_answer_question.h"
 
+ShortAnswerQuestion::ShortAnswerQuestion() {
+
+}
+
 ShortAnswerQuestion::ShortAnswerQuestion(int set_question_number) {
 	question_text_ = "";
 	current_score_ = 0.0;

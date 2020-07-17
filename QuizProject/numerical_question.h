@@ -5,13 +5,16 @@ class NumericalQuestion : public Question {
 private:
 	//If the absolute error of the student's answer (|correct_answer - student answer|) exceeds this value,
 	//then their answer is wrong. If this value is negative, then it will not be checked.
-	double max_permitted_absolute_error_;
+	double max_permitted_absolute_error_ = 0;
 
 	//If the relative error of the student's answer (|correct_answer - student answer| / |correct_answer|)
 	//exceeds this value, then their answer is wrong. If this value is negative, then it will not be checked.
-	double max_permitted_relative_error_;
+	double max_permitted_relative_error_ = 0;
 
 public:
+	//Default constructor that sets nothing.
+	NumericalQuestion();
+
 	//Create a NumericalQuestion object with a question_text_ of "", an empty deque for available_points_
 	// empty vectors for correct_answers_ and student answers, a current score of 0,
 	// and 0 max_permitted_absolute_error_ and 0 max_permitted_relative_error_
@@ -50,4 +53,12 @@ public:
 	bool operator==(const NumericalQuestion& other) const;
 
 	bool operator!=(const NumericalQuestion& other) const;
+
+	template <class Archive>
+	void serialize(Archive& ar) {
+		ar(cereal::base_class<Question>(this), max_permitted_absolute_error_, max_permitted_relative_error_);
+	}
 };
+
+CEREAL_REGISTER_TYPE(NumericalQuestion)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Question, NumericalQuestion)
