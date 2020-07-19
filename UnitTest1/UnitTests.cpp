@@ -2119,6 +2119,83 @@ namespace TestCases {
 			Assert::AreEqual(get<2>(test.GetAssignedQuestions()[1]).size(), (size_t)0);
 		}
 
+		TEST_METHOD(FailToAddQuestionToCategoryBecauseItHasDifferentMaxScore) {
+			Test test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.CreateQuestionCategory("Questions");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("6,4,3,2,1");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			NumericalQuestion question_one(1, "What is 5 + 3?");
+			question_one.SetAvailablePoints("5,4,3,2,1");
+			ShortAnswerQuestion question_two(2, "What is George Washington's name?");
+			question_two.SetAvailablePoints("5,4,3,2,1");
+			NumericalQuestion question_three(3, "What is 3 times 7?");
+			question_three.SetAvailablePoints("6,4,3,2,1");
+
+			Assert::AreEqual(test.GetUnassignedQuestions().size(), (size_t)1);
+			Assert::AreEqual(test.GetAssignedQuestions().size(), (size_t)1);
+			Assert::AreEqual(test.GetCurrentCategory(), (string)"");
+			Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[0]) == question_three);
+
+			Assert::AreEqual(get<0>(test.GetAssignedQuestions()[0]), (string)"Questions");
+			Assert::AreEqual(get<1>(test.GetAssignedQuestions()[0]), -1);
+			Assert::AreEqual(get<2>(test.GetAssignedQuestions()[0]).size(), (size_t)2);
+			Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(get<2>(test.GetAssignedQuestions()[0])[0]) == question_one);
+			Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(get<2>(test.GetAssignedQuestions()[0])[1]) == question_two);
+		}
+
+		TEST_METHOD(AddQuestionToCategoryEvenThoughAvailablePointsDifferAllowedBecauseSameMaxScore) {
+			Test test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.CreateQuestionCategory("Questions");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("5,5,5,5,5,5,4.2,4,3,2.7,2,1");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			NumericalQuestion question_one(1, "What is 5 + 3?");
+			question_one.SetAvailablePoints("5,4,3,2,1");
+			ShortAnswerQuestion question_two(2, "What is George Washington's name?");
+			question_two.SetAvailablePoints("5,4,3,2,1");
+			NumericalQuestion question_three(3, "What is 3 times 7?");
+			question_three.SetAvailablePoints("5,5,5,5,5,5,4.2,4,3,2.7,2,1");
+
+			Assert::AreEqual(test.GetUnassignedQuestions().size(), (size_t)0);
+			Assert::AreEqual(test.GetAssignedQuestions().size(), (size_t)1);
+			Assert::AreEqual(test.GetCurrentCategory(), (string)"Questions");
+
+			Assert::AreEqual(get<0>(test.GetAssignedQuestions()[0]), (string)"Questions");
+			Assert::AreEqual(get<1>(test.GetAssignedQuestions()[0]), -1);
+			Assert::AreEqual(get<2>(test.GetAssignedQuestions()[0]).size(), (size_t)3);
+			Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(get<2>(test.GetAssignedQuestions()[0])[0]) == question_one);
+			Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(get<2>(test.GetAssignedQuestions()[0])[1]) == question_two);
+			Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(get<2>(test.GetAssignedQuestions()[0])[2]) == question_three);
+		}
 		TEST_METHOD(SelectAssignedQuestion) {
 			Test test("test");
 
@@ -3195,13 +3272,14 @@ namespace TestCases {
 
 			test.CreateQuestionCategory("Math");
 			test.CreateQuestionCategory("History");
+			test.CreateQuestionCategory("Other Math");
 
 			test.SelectCurrentQuestion("1");
 			test.AddCurrentQuestionToCategory("Math");
 			test.SelectCurrentQuestion("2");
 			test.AddCurrentQuestionToCategory("History");
 			test.SelectCurrentQuestion("3");
-			test.AddCurrentQuestionToCategory("Math");
+			test.AddCurrentQuestionToCategory("Other Math");
 
 			Assert::AreEqual(test.GetMaxAvailableScore(), 17.1);
 		}
@@ -3245,13 +3323,14 @@ namespace TestCases {
 
 			test.CreateQuestionCategory("Math");
 			test.CreateQuestionCategory("History");
+			test.CreateQuestionCategory("Other Math");
 
 			test.SelectCurrentQuestion("1");
 			test.AddCurrentQuestionToCategory("Math");
 			test.SelectCurrentQuestion("2");
 			test.AddCurrentQuestionToCategory("History");
 			test.SelectCurrentQuestion("3");
-			test.AddCurrentQuestionToCategory("Math");
+			test.AddCurrentQuestionToCategory("Other Math");
 
 			get<2>(test.GetAssignedQuestions()[0])[0]->SubmitStudentAnswer("8");
 			get<2>(test.GetAssignedQuestions()[1])[0]->SubmitStudentAnswer("Abraham Lincoln");

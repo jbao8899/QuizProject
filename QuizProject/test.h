@@ -94,6 +94,7 @@ public:
 	//stored in that tuple, then a shared_ptr referring to it will be pushed to the vector within
 	//the tuple with a string value of category_name, it will be popped from its vector within assigned_questions_,
 	//and current_category_ will be set to category_name
+	//If the current question's max_possible_score_ does not equal the max_possible_score_ of any question within the category, nothing will be done.
 	void AddCurrentQuestionToCategory(string category_name);
 
 	//If current_category_ equals "" or if current_question_ refers to nothing then nothing happens.

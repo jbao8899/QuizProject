@@ -112,6 +112,12 @@ void Test::AddCurrentQuestionToCategory(string category_name) {
 		return;
 	}
 
+	for (unsigned i = 0; i < get<2>(assigned_questions_[index_of_desired_category]).size(); ++i) {
+		if (get<2>(assigned_questions_[index_of_desired_category])[i]->GetMaxPossibleScore() != current_question_.lock()->GetMaxPossibleScore()) {
+			return;
+		}
+	}
+
 	if (current_category_ == "") {
 		get<2>(assigned_questions_[index_of_desired_category]).push_back(current_question_.lock());
 		current_category_ = category_name;
