@@ -25,7 +25,7 @@ using std::ofstream;
 using std::string;
 using std::vector;
 
-//TODO:: test serialization
+//TODO:: Change error setting functions to take doubles
 
 namespace TestCases {
 	TEST_CLASS(ShortAnswerQuestionTests) {
@@ -1734,6 +1734,8 @@ namespace TestCases {
 				question.SetAvailablePoints("1.5,0.75,0.5,0.25");
 				question.SubmitStudentAnswer("3");
 				question.SubmitStudentAnswer("2");
+				question.SetPermittedAbsoluteError(0.1);
+				question.SetPermittedRelativeError(0.05);
 				question.SubmitStudentAnswer("jiersjgiij");
 
 				ofstream os;
@@ -1753,6 +1755,8 @@ namespace TestCases {
 				same_as_question.SubmitStudentAnswer("3");
 				same_as_question.SubmitStudentAnswer("2");
 				same_as_question.SubmitStudentAnswer("jiersjgiij");
+				same_as_question.SetPermittedAbsoluteError(0.1);
+				same_as_question.SetPermittedRelativeError(0.05);
 
 				ifstream is;
 				is.open("testing.txt");
@@ -3336,6 +3340,149 @@ namespace TestCases {
 			get<2>(test.GetAssignedQuestions()[1])[0]->SubmitStudentAnswer("Abraham Lincoln");
 
 			Assert::AreEqual(test.GetMaxAvailableScore(), 17.1);
+		}
+
+		TEST_METHOD(SaveAndLoadTest) {
+			{
+				Test test("Test for testing");
+
+				test.AddShortAnswerQuestion("What are the primary colors?");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("red");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("blue");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("yellow");
+				test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,2,1");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("purple");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("RED");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("yellow");
+
+				test.AddNumericalQuestion("What is the square root of 4?");
+				test.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
+				test.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
+				test.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
+				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("3");
+				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("2");
+				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("jiersjgiij");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError(0.1);
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError(0.05);
+
+				test.AddNumericalQuestion("What is the square root of 9?");
+				test.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
+				test.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
+				test.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
+				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("3");
+				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("2");
+				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("GJ*E");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError(0.1);
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError(0.05);
+
+				test.CreateQuestionCategory("Art");
+				test.CreateQuestionCategory("Math");
+				test.CreateQuestionCategory("Empty");
+
+				test.ChangeNumberOfQuestionsToAskFromCategory("Math", "2");
+
+				test.SelectCurrentQuestion("1");
+				test.AddCurrentQuestionToCategory("Art");
+				test.SelectCurrentQuestion("2");
+				test.AddCurrentQuestionToCategory("Math");
+				test.SelectCurrentQuestion("3");
+				test.AddCurrentQuestionToCategory("Math");
+
+				test.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("Abraham");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("Lincoln");
+				test.GetUnassignedQuestions()[0]->AddCorrectAnswer("Abraham Lincoln");
+				test.GetUnassignedQuestions()[0]->SetAvailablePoints("2");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("Abe");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("Abram");
+				test.GetUnassignedQuestions()[0]->SubmitStudentAnswer("Abraham");
+				
+				test.SelectCurrentQuestion("1");
+
+				ofstream os;
+				os.open("testing.txt");
+
+				cereal::PortableBinaryOutputArchive oarchive(os);
+
+				oarchive(test);
+				os.close();
+			}
+
+			{
+				ShortAnswerQuestion question_one(1, "What are the primary colors?");
+				question_one.AddCorrectAnswer("red");
+				question_one.AddCorrectAnswer("blue");
+				question_one.AddCorrectAnswer("yellow");
+				question_one.SetAvailablePoints("5,4,2,1");
+				question_one.SubmitStudentAnswer("purple");
+				question_one.SubmitStudentAnswer("RED");
+				question_one.SubmitStudentAnswer("yellow");
+
+				NumericalQuestion question_two(2, "What is the square root of 4?");
+				question_two.AddCorrectAnswer("2");
+				question_two.AddCorrectAnswer("-2");
+				question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
+				question_two.SubmitStudentAnswer("3");
+				question_two.SubmitStudentAnswer("2");
+				question_two.SubmitStudentAnswer("jiersjgiij");
+				question_two.SetPermittedAbsoluteError(0.1);
+				question_two.SetPermittedRelativeError(0.05);
+
+				NumericalQuestion question_three(3, "What is the square root of 9?");
+				question_three.AddCorrectAnswer("3");
+				question_three.AddCorrectAnswer("-3");
+				question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
+				question_three.SubmitStudentAnswer("3");
+				question_three.SubmitStudentAnswer("2");
+				question_three.SubmitStudentAnswer("GJ*E");
+				question_three.SetPermittedAbsoluteError(0.1);
+				question_three.SetPermittedRelativeError(0.05);
+
+				ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
+				question_four.AddCorrectAnswer("Abraham");
+				question_four.AddCorrectAnswer("Lincoln");
+				question_four.AddCorrectAnswer("Abraham Lincoln");
+				question_four.SetAvailablePoints("2");
+				question_four.SubmitStudentAnswer("Abe");
+				question_four.SubmitStudentAnswer("Abram");
+				question_four.SubmitStudentAnswer("Abraham");
+
+				ifstream is;
+				is.open("testing.txt");
+				cereal::PortableBinaryInputArchive iarchive(is);
+
+				Test test;
+
+				iarchive(test);
+
+				Assert::AreEqual(test.GetNameOfTest(), (string)"Test for testing");
+				
+				Assert::AreEqual(test.GetUnassignedQuestions().size(), (size_t)1);
+				Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(test.GetUnassignedQuestions()[0]) == question_four);
+
+				Assert::AreEqual(test.GetAssignedQuestions().size(), (size_t)3);
+
+				Assert::AreEqual(get<0>(test.GetAssignedQuestions()[0]), (string)"Art");
+				Assert::AreEqual(get<1>(test.GetAssignedQuestions()[0]), -1);
+				Assert::AreEqual(get<2>(test.GetAssignedQuestions()[0]).size(), (size_t)1);
+				Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(get<2>(test.GetAssignedQuestions()[0])[0]) == question_one);
+
+				Assert::AreEqual(get<0>(test.GetAssignedQuestions()[1]), (string)"Math");
+				Assert::AreEqual(get<1>(test.GetAssignedQuestions()[1]), 2);
+				Assert::AreEqual(get<2>(test.GetAssignedQuestions()[1]).size(), (size_t)2);
+				Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(get<2>(test.GetAssignedQuestions()[1])[0]) == question_two);
+				Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(get<2>(test.GetAssignedQuestions()[1])[1]) == question_three);
+
+				Assert::AreEqual(get<0>(test.GetAssignedQuestions()[2]), (string)"Empty");
+				Assert::AreEqual(get<1>(test.GetAssignedQuestions()[2]), -1);
+				Assert::AreEqual(get<2>(test.GetAssignedQuestions()[2]).size(), (size_t)0);
+
+				Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(test.GetCurrentQuestion().lock()) == question_one);
+				Assert::AreEqual(test.GetCurrentCategory(), (string)"Art");
+				Assert::AreEqual(test.GetNextQuestionNumber(), 5);
+
+				is.close();
+			}
 		}
 	};
 }

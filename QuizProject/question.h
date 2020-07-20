@@ -12,7 +12,7 @@
 #include "cereal/types/deque.hpp"
 #include "cereal/types/memory.hpp"
 #include "cereal/types/string.hpp"
-#include "cereal/types/utility.hpp" //pair????????
+#include "cereal/types/utility.hpp"
 #include "cereal/types/vector.hpp"
 
 using std::abs;

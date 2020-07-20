@@ -6,6 +6,10 @@ Test::Test(string set_name_of_test) {
 	next_question_number_ = 1;
 }
 
+Test::Test() {
+
+}
+
 void Test::SetNameOfTest(string set_name_of_test) {
 	name_of_test_ = set_name_of_test;
 }

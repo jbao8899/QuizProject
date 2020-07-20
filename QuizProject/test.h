@@ -4,6 +4,8 @@
 #include <queue>
 #include <utility>
 
+#include "cereal/types/tuple.hpp"
+
 #include "numerical_question.h"
 #include "short_answer_question.h"
 
@@ -18,7 +20,7 @@ using std::weak_ptr;
 
 class Test {
 private:
-	string                                                   name_of_test_;
+	string                                                   name_of_test_ = "";
 
 	// All the Questions that have been created, but which have not been removed or assigned.
 	vector<shared_ptr<Question>>                             unassigned_questions_;
@@ -36,13 +38,16 @@ private:
 	//string stored in the tuple which stores the vector containing the shared pointer here.
 	//If the current_question_ is null or if it points to a Question with its shared_ptr in unassigned_questions_, then
 	//we will store ""
-	string                                                   current_category_;
+	string                                                   current_category_ = "";
 
 	//The number of the next question.
-	int                                                      next_question_number_;
+	int                                                      next_question_number_ = 1;
 public:
 	//Creates a new Test object with a current_category_ of "" and a next_question_number_ of 1.
 	Test(string set_name_of_test);
+
+	//Default constructor for cereal
+	Test();
 
 	void SetNameOfTest(string set_name_of_test);
 
@@ -131,4 +136,9 @@ public:
 	//Iterates through all Questions in assigned_questions_, adds up the max scores available on each, then returns that.
 	//If assigned_questions_ is empty, returns 0.
 	double GetMaxAvailableScore();
+
+	template <class Archive>
+	void serialize(Archive& ar) {
+		ar(name_of_test_, unassigned_questions_, assigned_questions_, current_question_, current_category_, next_question_number_);
+	}
 };
