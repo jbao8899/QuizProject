@@ -22,16 +22,68 @@ NumericalQuestion::NumericalQuestion(int set_question_number, string set_questio
 	question_number_ = set_question_number;
 }
 
-void NumericalQuestion::SetPermittedAbsoluteError(double set_permitted_absolute_error) {
-	max_permitted_absolute_error_ = set_permitted_absolute_error;
+void NumericalQuestion::SetPermittedAbsoluteError(string set_permitted_absolute_error) {
+	if (set_permitted_absolute_error.length() == 0) {
+		return;
+	}
+
+	int num_periods = 0;
+	for (unsigned i = 0; i < set_permitted_absolute_error.length(); ++i) {
+		if (set_permitted_absolute_error[i] == ' '
+			|| (!isdigit(set_permitted_absolute_error[i])
+				&& set_permitted_absolute_error[i] != '.')
+			    && set_permitted_absolute_error[i] != '-') {
+			return;
+		}
+
+		if (set_permitted_absolute_error[i] == '-' && i != 0) {
+			return;
+		}
+
+		if (set_permitted_absolute_error[i] == '.') {
+			++num_periods;
+		}
+	}
+
+	if (num_periods > 1) {
+		return;
+	}
+
+	max_permitted_absolute_error_ = stod(set_permitted_absolute_error);
 }
 
 double NumericalQuestion::GetPermittedAbsoluteError() const {
 	return max_permitted_absolute_error_;
 }
 
-void NumericalQuestion::SetPermittedRelativeError(double set_permitted_relative_error) {
-	max_permitted_relative_error_ = set_permitted_relative_error;
+void NumericalQuestion::SetPermittedRelativeError(string set_permitted_relative_error) {
+	if (set_permitted_relative_error.length() == 0) {
+		return;
+	}
+
+	int num_periods = 0;
+	for (unsigned i = 0; i < set_permitted_relative_error.length(); ++i) {
+		if (set_permitted_relative_error[i] == ' '
+			|| (!isdigit(set_permitted_relative_error[i])
+				&& set_permitted_relative_error[i] != '.')
+				&& set_permitted_relative_error[i] != '-') {
+			return;
+		}
+
+		if (set_permitted_relative_error[i] == '-' && i != 0) {
+			return;
+		}
+
+		if (set_permitted_relative_error[i] == '.') {
+			++num_periods;
+		}
+	}
+
+	if (num_periods > 1) {
+		return;
+	}
+
+	max_permitted_relative_error_ = stod(set_permitted_relative_error);
 }
 
 double NumericalQuestion::GetPermittedRelativeError() const {

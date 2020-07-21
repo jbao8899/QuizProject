@@ -49,43 +49,43 @@ public:
 	//Default constructor for cereal
 	Test();
 
-	void SetNameOfTest(string set_name_of_test);
+	void                                                            SetNameOfTest(string set_name_of_test);
 
-	const vector<shared_ptr<Question>> GetUnassignedQuestions() const;
+	const vector<shared_ptr<Question>>                              GetUnassignedQuestions() const;
 
 	const vector<tuple<string, int, vector<shared_ptr<Question>>>>& GetAssignedQuestions() const;
 
-	weak_ptr<Question> GetCurrentQuestion();
+	weak_ptr<Question>                                              GetCurrentQuestion();
 
-	string GetNameOfTest() const;
+	string                                                          GetNameOfTest() const;
 
-	string GetCurrentCategory() const;
+	string                                                          GetCurrentCategory() const;
 	
-	int GetNextQuestionNumber() const;
+	int                                                             GetNextQuestionNumber() const;
 	
 	//Creates a new ShortAnswerQuestion with question_text_ equal to set_question_text (and all other fields empty),
 	//adds it to unassigned_questions_, sets it as the current_question_,
 	//and sets current_category_ as ""
 	//Its question_number_ will be next_question_number_, and next_question_number_ will be incremented by 1.
-	void AddShortAnswerQuestion(string set_question_text);
+	void                                                            AddShortAnswerQuestion(string set_question_text);
 
 	//Creates a new NumericalQuestion with question_text_ equal to set_question_text,
 	//adds it to unassigned_questions_, sets it as the current_question_,
 	//and sets current_category_ as ""
 	//Its question_number_ will be next_question_number_, and next_question_number_ will be incremented by 1.
-	void AddNumericalQuestion(string set_question_text);
+	void                                                            AddNumericalQuestion(string set_question_text);
 
 	//Pushes a new tuple containing a string (category_name), the integer -1, and an empty vector of shared_ptrs to Questions
 	//to the vector assigned_questions_. If a tuple containing category_name as its string already exists, then nothing
 	//will be done.
-	void CreateQuestionCategory(string category_name);
+	void                                                            CreateQuestionCategory(string category_name);
 
 	//Takes a string representing an int
 	//If the string contains any characters besides digits or is empty, then does nothing and returns.
 	//Searches through first unassigned_questions_ and then assigned_questions_ for a question with the number question_number.
 	//If it is found, set current_question_ to point to it. If it is in assigned_questions_, set current_category_ equal to the name of that
 	//Question's category (string in tuple that stores sub-vector that contains that Question's shared_ptr). Otherwise, set current_category_ to "".
-	void SelectCurrentQuestion(string question_number_string);
+	void                                                            SelectCurrentQuestion(string question_number_string);
 
 	//If the current_question_ is already within the tuple with a string value of category_name, then nothing will be done
 	//(current_category_ == category_name)
@@ -100,42 +100,42 @@ public:
 	//the tuple with a string value of category_name, it will be popped from its vector within assigned_questions_,
 	//and current_category_ will be set to category_name
 	//If the current question's max_possible_score_ does not equal the max_possible_score_ of any question within the category, nothing will be done.
-	void AddCurrentQuestionToCategory(string category_name);
+	void                                                            AddCurrentQuestionToCategory(string category_name);
 
 	//If current_category_ equals "" or if current_question_ refers to nothing then nothing happens.
 	//Otherwise, we add a shared_ptr to current_question_ to unassigned_questions_, change the current_category_ to "", and
 	// and pop the shared_ptr to current_question_ found there in assigned_questions_
-	void RemoveCurrentQuestionFromCategory();
+	void                                                            RemoveCurrentQuestionFromCategory();
 
 	//If current_question_ refers to nothing, then nothing is done.
 	//If current_category_ equals "", then we pop the current question from unassigned_questions_
 	//Otherwise, we iterate through assigned_questions_ until we find the tuple with the string value of current_category_, and
 	//pop the current_question_ from the vector in that tuple.
 	//We then set current_category_ to ""
-	void DeleteCurrentQuestion();
+	void                                                            DeleteCurrentQuestion();
 
 	//If no tuple within assigned_questions_ contains the string category_name, nothing will happen.
 	//Otherwise, we will push shared_ptrs of all Questions within that tuple's vector into unassigned_questions_ and then pop that tuple
 	//from assigned_questions_
 	//If the current_category_ equals category_name, it will be set to ""
-	void DeleteQuestionCategory(string category_name);
+	void                                                            DeleteQuestionCategory(string category_name);
 
 	//If no tuple within assigned_questions_ contains the string first_category_name, nothing will happen.
 	//If no tuple within assigned_questions_ contains the string second_category_name, nothing will happen
 	//Otherwise, we swap the positions of the two tuples within the assigned_questions_ vector.
 	//Returns if two values are the same
-	void SwitchOrderOfCategories(string first_category_name, string second_category_name);
+	void                                                            SwitchOrderOfCategories(string first_category_name, string second_category_name);
 
 	//If there is no tuple within assigned_questions_ entitled category_name, nothing will happen.
 	//If there is one entitled category_name (with category_name as its string),
 	//then we will set the int in that tuple to number_of_questions (turned to int via stoi).
 	//If number_of_questions is not a vald int, then nothing will be done.
 	//If number_of_questions contains any characters besides digits or is empty, then does nothing and returns.
-	void ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string);
+	void                                                            ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string);
 
 	//Iterates through all Questions in assigned_questions_, adds up the max scores available on each, then returns that.
 	//If assigned_questions_ is empty, returns 0.
-	double GetMaxAvailableScore();
+	double                                                          GetMaxAvailableScore();
 
 	template <class Archive>
 	void serialize(Archive& ar) {

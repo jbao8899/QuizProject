@@ -35,8 +35,8 @@ int main(){
 		test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("3");
 		test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("2");
 		test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("jiersjgiij");
-		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError(0.1);
-		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError(0.05);
+		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
+		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
 
 		test.AddNumericalQuestion("What is the square root of 9?");
 		test.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
@@ -45,8 +45,8 @@ int main(){
 		test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("3");
 		test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("2");
 		test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("GJ*E");
-		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError(0.1);
-		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError(0.05);
+		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
+		dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
 
 		test.CreateQuestionCategory("Art");
 		test.CreateQuestionCategory("Math");
@@ -98,8 +98,8 @@ int main(){
 		question_two.SubmitStudentAnswer("3");
 		question_two.SubmitStudentAnswer("2");
 		question_two.SubmitStudentAnswer("jiersjgiij");
-		question_two.SetPermittedAbsoluteError(0.1);
-		question_two.SetPermittedRelativeError(0.05);
+		question_two.SetPermittedAbsoluteError("0.1");
+		question_two.SetPermittedRelativeError("0.05");
 
 		NumericalQuestion question_three(3, "What is the square root of 9?");
 		question_three.AddCorrectAnswer("3");
@@ -108,8 +108,8 @@ int main(){
 		question_three.SubmitStudentAnswer("3");
 		question_three.SubmitStudentAnswer("2");
 		question_three.SubmitStudentAnswer("GJ*E");
-		question_three.SetPermittedAbsoluteError(0.1);
-		question_three.SetPermittedRelativeError(0.05);
+		question_three.SetPermittedAbsoluteError("0.1");
+		question_three.SetPermittedRelativeError("0.05");
 
 		ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 		question_four.AddCorrectAnswer("Abraham");

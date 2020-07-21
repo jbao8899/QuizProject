@@ -25,14 +25,16 @@ public:
 	// and 0 max_permitted_absolute_error_ and 0 max_permitted_relative_error_
 	NumericalQuestion(int set_question_number, string set_question);
 
-	//Changes the max_permitted_absolute_error_ to set_permitted_absolute_error
-	void   SetPermittedAbsoluteError(double set_permitted_absolute_error);
+	//Changes the max_permitted_absolute_error_ to set_permitted_absolute_error (turned into a string).
+	//If set_permitted_absolute_error is not a valid decimal number, then nothing will be done.
+	void   SetPermittedAbsoluteError(string set_permitted_absolute_error);
 
 	//Returns the current max_permitted_absolute_error_
 	double GetPermittedAbsoluteError() const;
 
 	//Changes the max_permitted_relative_error_ to set_permitted_relative_error
-	void   SetPermittedRelativeError(double set_permitted_relative_error);
+	//If set_permitted_relative_error is not a valid decimal number, then nothing will be done.
+	void   SetPermittedRelativeError(string set_permitted_relative_error);
 
 	//Returns the current max_permitted_relative_error_
 	double GetPermittedRelativeError() const;
@@ -50,9 +52,9 @@ public:
 	//If either of those values is negative, it will not be checked. If either is 0, then the student must get the answer exactly right.
 	bool   SubmitStudentAnswer(string answer);
 
-	bool operator==(const NumericalQuestion& other) const;
+	bool   operator==(const NumericalQuestion& other) const;
 
-	bool operator!=(const NumericalQuestion& other) const;
+	bool   operator!=(const NumericalQuestion& other) const;
 
 	template <class Archive>
 	void serialize(Archive& ar) {

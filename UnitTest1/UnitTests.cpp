@@ -25,8 +25,6 @@ using std::ofstream;
 using std::string;
 using std::vector;
 
-//TODO:: Change error setting functions to take doubles
-
 namespace TestCases {
 	TEST_CLASS(ShortAnswerQuestionTests) {
 	public:
@@ -812,16 +810,141 @@ namespace TestCases {
 
 		TEST_METHOD(GetSetPermittedAbsoluteError) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError(5.1);
+			question.SetPermittedAbsoluteError("5.1");
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 5.1);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
+		TEST_METHOD(GetSetPermittedNegativeAbsoluteError) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("-37.5");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), -37.5);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorTwoPeriods) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("5..1");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorTwoMinuses) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("--2");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorMinusInWrongPlace) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("5-2");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorEmptyString) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorJustASpace) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError(" ");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorSpaceInFront) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError(" 0.1");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorNotANumber) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("banana");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetAbsoluteErrorContainsNonNumerical) {
+			NumericalQuestion question(1);
+			question.SetPermittedAbsoluteError("0.37s");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
 		TEST_METHOD(GetSetPermittedRelativeError) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError(0.078);
+			question.SetPermittedRelativeError("0.078");
 			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.078);
+		}
+
+		TEST_METHOD(GetSetPermittedNegativeRelativeError) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("-2.3");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), -2.3);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorTwoPeriods) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("5..1");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorTwoMinuses) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("--2");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorMinusInWrongPlace) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("5-2");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorEmptyString) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorJustASpace) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError(" ");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorSpaceInFront) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError(" 0.1");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorNotANumber) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("banana");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
+		}
+
+		TEST_METHOD(CannotSetRelativeErrorContainsNonNumerical) {
+			NumericalQuestion question(1);
+			question.SetPermittedRelativeError("0.37s");
+			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(GetSetQuestion) {
@@ -1078,8 +1201,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("5.1689");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(0.01);
-			question.SetPermittedRelativeError(0.002);
+			question.SetPermittedAbsoluteError("0.01");
+			question.SetPermittedRelativeError("0.002");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("5.16", true));
@@ -1097,8 +1220,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("1000.0");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(10.0);
-			question.SetPermittedRelativeError(-1);
+			question.SetPermittedAbsoluteError("10.0");
+			question.SetPermittedRelativeError("-1");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("1009.999", true));
@@ -1116,8 +1239,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-21489.349");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(-439889.489389);
-			question.SetPermittedRelativeError(0.001);
+			question.SetPermittedAbsoluteError("-439889.489389");
+			question.SetPermittedRelativeError("0.001");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-21469.8505", true));
@@ -1136,8 +1259,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("432690930");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(-0.37);
-			question.SetPermittedRelativeError(-2);
+			question.SetPermittedAbsoluteError("-0.37");
+			question.SetPermittedRelativeError("-2");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-0.328957", true));
@@ -1155,8 +1278,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-21489.349");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(19.49);
-			question.SetPermittedRelativeError(0.001);
+			question.SetPermittedAbsoluteError("19.49");
+			question.SetPermittedRelativeError("0.001");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-21469.8505", false));
@@ -1174,8 +1297,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("1000.0");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(10.0);
-			question.SetPermittedRelativeError(0.0099);
+			question.SetPermittedAbsoluteError("10.0");
+			question.SetPermittedRelativeError("0.0099");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("1009.999", false));
@@ -1193,8 +1316,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-0.000218");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(0.000001);
-			question.SetPermittedRelativeError(0.00499);
+			question.SetPermittedAbsoluteError("0.000001");
+			question.SetPermittedRelativeError("0.00499");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-0.00021691", false));
@@ -1212,8 +1335,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("0.000000001");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(0.0000000005);
-			question.SetPermittedRelativeError(-293573948);
+			question.SetPermittedAbsoluteError("0.0000000005");
+			question.SetPermittedRelativeError("-293573948");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("0.0000000016", false));
@@ -1231,8 +1354,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("8934956759948.5");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError(-1);
-			question.SetPermittedRelativeError(0.05);
+			question.SetPermittedAbsoluteError("-1");
+			question.SetPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1250,8 +1373,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("100.0");
 			question.SetAvailablePoints("5,4,3,2,1");
-			question.SetPermittedAbsoluteError(5.0);
-			question.SetPermittedRelativeError(0.05);
+			question.SetPermittedAbsoluteError("5.0");
+			question.SetPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1279,8 +1402,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("100.0");
 			question.SetAvailablePoints("5,3");
-			question.SetPermittedAbsoluteError(5.0);
-			question.SetPermittedRelativeError(0.05);
+			question.SetPermittedAbsoluteError("5.0");
+			question.SetPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1504,33 +1627,33 @@ namespace TestCases {
 
 		TEST_METHOD(TwoQuestionsNotSameIfDifferentMaxPermittedAbsoluteError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedAbsoluteError(0.01);
+			first_question.SetPermittedAbsoluteError("0.01");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedAbsoluteError(0.011);
+			second_question.SetPermittedAbsoluteError("0.011");
 			Assert::IsFalse(first_question == second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsDifferentIfDifferentMaxPermittedAbsoluteError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedAbsoluteError(0.01);
+			first_question.SetPermittedAbsoluteError("0.01");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedAbsoluteError(0.011);
+			second_question.SetPermittedAbsoluteError("0.011");
 			Assert::IsTrue(first_question != second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsNotSameIfDifferentMaxPermittedRelativeError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedRelativeError(0.00001);
+			first_question.SetPermittedRelativeError("0.00001");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedRelativeError(0.00000999999999);
+			second_question.SetPermittedRelativeError("0.00000999999999");
 			Assert::IsFalse(first_question == second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsDifferentIfDifferentMaxPermittedRelativeError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedRelativeError(0.00001);
+			first_question.SetPermittedRelativeError("0.00001");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedRelativeError(0.00000999999999);
+			second_question.SetPermittedRelativeError("0.00000999999999");
 			Assert::IsTrue(first_question != second_question);
 		}
 
@@ -1660,8 +1783,8 @@ namespace TestCases {
 			question.AddCorrectAnswer("5");
 			question.AddCorrectAnswer("6");
 			question.AddCorrectAnswer("7");
-			question.SetPermittedAbsoluteError(0.1);
-			question.SetPermittedRelativeError(0.02);
+			question.SetPermittedAbsoluteError("0.1");
+			question.SetPermittedRelativeError("0.02");
 			question.SubmitStudentAnswer("10");
 			question.SubmitStudentAnswer("5");
 			Assert::IsTrue(question == question);
@@ -1673,8 +1796,8 @@ namespace TestCases {
 			question.AddCorrectAnswer("5");
 			question.AddCorrectAnswer("6");
 			question.AddCorrectAnswer("7");
-			question.SetPermittedAbsoluteError(0.1);
-			question.SetPermittedRelativeError(0.02);
+			question.SetPermittedAbsoluteError("0.1");
+			question.SetPermittedRelativeError("0.02");
 			question.SubmitStudentAnswer("10");
 			question.SubmitStudentAnswer("5");
 			Assert::IsFalse(question != question);
@@ -1686,8 +1809,8 @@ namespace TestCases {
 			first_question.AddCorrectAnswer("5");
 			first_question.AddCorrectAnswer("6");
 			first_question.AddCorrectAnswer("7");
-			first_question.SetPermittedAbsoluteError(0.1);
-			first_question.SetPermittedRelativeError(0.02);
+			first_question.SetPermittedAbsoluteError("0.1");
+			first_question.SetPermittedRelativeError("0.02");
 			first_question.SubmitStudentAnswer("10");
 			first_question.SubmitStudentAnswer("5");
 
@@ -1696,8 +1819,8 @@ namespace TestCases {
 			second_question.AddCorrectAnswer("5");
 			second_question.AddCorrectAnswer("6");
 			second_question.AddCorrectAnswer("7");
-			second_question.SetPermittedAbsoluteError(0.1);
-			second_question.SetPermittedRelativeError(0.02);
+			second_question.SetPermittedAbsoluteError("0.1");
+			second_question.SetPermittedRelativeError("0.02");
 			second_question.SubmitStudentAnswer("10");
 			second_question.SubmitStudentAnswer("5");
 			Assert::IsTrue(first_question == second_question);
@@ -1709,8 +1832,8 @@ namespace TestCases {
 			first_question.AddCorrectAnswer("5");
 			first_question.AddCorrectAnswer("6");
 			first_question.AddCorrectAnswer("7");
-			first_question.SetPermittedAbsoluteError(0.1);
-			first_question.SetPermittedRelativeError(0.02);
+			first_question.SetPermittedAbsoluteError("0.1");
+			first_question.SetPermittedRelativeError("0.02");
 			first_question.SubmitStudentAnswer("10");
 			first_question.SubmitStudentAnswer("5");
 
@@ -1719,8 +1842,8 @@ namespace TestCases {
 			second_question.AddCorrectAnswer("5");
 			second_question.AddCorrectAnswer("6");
 			second_question.AddCorrectAnswer("7");
-			second_question.SetPermittedAbsoluteError(0.1);
-			second_question.SetPermittedRelativeError(0.02);
+			second_question.SetPermittedAbsoluteError("0.1");
+			second_question.SetPermittedRelativeError("0.02");
 			second_question.SubmitStudentAnswer("10");
 			second_question.SubmitStudentAnswer("5");
 			Assert::IsFalse(first_question != second_question);
@@ -1734,8 +1857,8 @@ namespace TestCases {
 				question.SetAvailablePoints("1.5,0.75,0.5,0.25");
 				question.SubmitStudentAnswer("3");
 				question.SubmitStudentAnswer("2");
-				question.SetPermittedAbsoluteError(0.1);
-				question.SetPermittedRelativeError(0.05);
+				question.SetPermittedAbsoluteError("0.1");
+				question.SetPermittedRelativeError("0.05");
 				question.SubmitStudentAnswer("jiersjgiij");
 
 				ofstream os;
@@ -1755,8 +1878,8 @@ namespace TestCases {
 				same_as_question.SubmitStudentAnswer("3");
 				same_as_question.SubmitStudentAnswer("2");
 				same_as_question.SubmitStudentAnswer("jiersjgiij");
-				same_as_question.SetPermittedAbsoluteError(0.1);
-				same_as_question.SetPermittedRelativeError(0.05);
+				same_as_question.SetPermittedAbsoluteError("0.1");
+				same_as_question.SetPermittedRelativeError("0.05");
 
 				ifstream is;
 				is.open("testing.txt");
@@ -3362,8 +3485,8 @@ namespace TestCases {
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("3");
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("2");
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("jiersjgiij");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError(0.1);
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError(0.05);
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
 
 				test.AddNumericalQuestion("What is the square root of 9?");
 				test.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
@@ -3372,8 +3495,8 @@ namespace TestCases {
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("3");
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("2");
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("GJ*E");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError(0.1);
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError(0.05);
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
 
 				test.CreateQuestionCategory("Art");
 				test.CreateQuestionCategory("Math");
@@ -3425,8 +3548,8 @@ namespace TestCases {
 				question_two.SubmitStudentAnswer("3");
 				question_two.SubmitStudentAnswer("2");
 				question_two.SubmitStudentAnswer("jiersjgiij");
-				question_two.SetPermittedAbsoluteError(0.1);
-				question_two.SetPermittedRelativeError(0.05);
+				question_two.SetPermittedAbsoluteError("0.1");
+				question_two.SetPermittedRelativeError("0.05");
 
 				NumericalQuestion question_three(3, "What is the square root of 9?");
 				question_three.AddCorrectAnswer("3");
@@ -3435,8 +3558,8 @@ namespace TestCases {
 				question_three.SubmitStudentAnswer("3");
 				question_three.SubmitStudentAnswer("2");
 				question_three.SubmitStudentAnswer("GJ*E");
-				question_three.SetPermittedAbsoluteError(0.1);
-				question_three.SetPermittedRelativeError(0.05);
+				question_three.SetPermittedAbsoluteError("0.1");
+				question_three.SetPermittedRelativeError("0.05");
 
 				ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 				question_four.AddCorrectAnswer("Abraham");

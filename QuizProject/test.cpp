@@ -245,7 +245,7 @@ void Test::SwitchOrderOfCategories(string first_category_name, string second_cat
 }
 
 void Test::ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string) {
-	if (number_of_questions_string.size() == 0) {
+	if (number_of_questions_string.length() == 0) {
 		return;
 	}
 
