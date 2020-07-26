@@ -15,7 +15,7 @@ Debug/
 *.sln
 QuizProject/pch.cpp
 QuizProject/pch.h
-QuizProject/testing.txt
+QuizProject/testing.dat
 QuizProject/QuizProject.vcxproj
 QuizProject/QuizProject.vcxproj.filters
 QuizProject/QuizProject.vcxproj.user

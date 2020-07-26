@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <queue>
 #include <utility>
 
 #include "cereal/types/tuple.hpp"
@@ -18,7 +17,7 @@ using std::swap;
 using std::tuple;
 using std::weak_ptr;
 
-class Test {
+class TestForInstructor {
 private:
 	string                                                   name_of_test_ = "";
 
@@ -28,7 +27,7 @@ private:
 	//A vector containing tuples of strings, ints, and vectors of shared_ptrs to Questions that have been assigned
 	//The string is just a label for the sub-vector contained within the tuple
 	//If the int is negative, then all of the Questions in the corresponding sub-vector will be given in the order they were pushed
-	//If the int is positive and has value n, then we will give out n random Questions from that sub-vector
+	//If the int is nonnegative and has value n, then we will give out n random Questions from that sub-vector
 	vector<tuple<string, int, vector<shared_ptr<Question>>>> assigned_questions_;
 
 	//The current question being viewed by the test maker
@@ -44,10 +43,10 @@ private:
 	int                                                      next_question_number_ = 1;
 public:
 	//Creates a new Test object with a current_category_ of "" and a next_question_number_ of 1.
-	Test(string set_name_of_test);
+	TestForInstructor(string set_name_of_test);
 
 	//Default constructor for cereal
-	Test();
+	TestForInstructor();
 
 	void                                                            SetNameOfTest(string set_name_of_test);
 

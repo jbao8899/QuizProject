@@ -86,6 +86,10 @@ public:
 	//Returns the question_number_.
 	virtual int                               GetQuestionNumber();
 
+	//If current_score_ > 0 or if available_points_ is empty, then return true.
+	//Otherwise, return false.
+	virtual bool                              IsQuestionCompleted();
+
 	template <class Archive>
 	void serialize(Archive& ar) {
 		ar(question_text_, available_points_, correct_answers_, student_answers_, current_score_, max_possible_score_, question_number_);

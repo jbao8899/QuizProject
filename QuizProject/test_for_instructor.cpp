@@ -1,58 +1,58 @@
-#include "test.h"
+#include "test_for_instructor.h"
 
-Test::Test(string set_name_of_test) {
+TestForInstructor::TestForInstructor(string set_name_of_test) {
 	name_of_test_ = set_name_of_test;
 	current_category_ = "";
 	next_question_number_ = 1;
 }
 
-Test::Test() {
+TestForInstructor::TestForInstructor() {
 
 }
 
-void Test::SetNameOfTest(string set_name_of_test) {
+void TestForInstructor::SetNameOfTest(string set_name_of_test) {
 	name_of_test_ = set_name_of_test;
 }
 
-string Test::GetNameOfTest() const {
+string TestForInstructor::GetNameOfTest() const {
 	return name_of_test_;
 }
 
-const vector<shared_ptr<Question>> Test::GetUnassignedQuestions() const {
+const vector<shared_ptr<Question>> TestForInstructor::GetUnassignedQuestions() const {
 	return unassigned_questions_;
 }
 
-const vector<tuple<string, int, vector<shared_ptr<Question>>>>& Test::GetAssignedQuestions() const {
+const vector<tuple<string, int, vector<shared_ptr<Question>>>>& TestForInstructor::GetAssignedQuestions() const {
 	return assigned_questions_;
 }
 
-weak_ptr<Question> Test::GetCurrentQuestion() {
+weak_ptr<Question> TestForInstructor::GetCurrentQuestion() {
 	return current_question_;
 }
 
-string Test::GetCurrentCategory() const {
+string TestForInstructor::GetCurrentCategory() const {
 	return current_category_;
 }
 
-int Test::GetNextQuestionNumber() const {
+int TestForInstructor::GetNextQuestionNumber() const {
 	return next_question_number_;
 }
 
-void Test::AddShortAnswerQuestion(string set_question_text) {
+void TestForInstructor::AddShortAnswerQuestion(string set_question_text) {
 	unassigned_questions_.push_back(make_shared<ShortAnswerQuestion>(next_question_number_, set_question_text));
 	current_question_ = unassigned_questions_[unassigned_questions_.size() - 1];
 	current_category_ = "";
 	next_question_number_++;
 }
 
-void Test::AddNumericalQuestion(string set_question_text) {
+void TestForInstructor::AddNumericalQuestion(string set_question_text) {
 	unassigned_questions_.push_back(make_shared<NumericalQuestion>(next_question_number_, set_question_text));
 	current_question_ = unassigned_questions_[unassigned_questions_.size() - 1];
 	current_category_ = "";
 	next_question_number_++;
 }
 
-void Test::CreateQuestionCategory(string category_name) {
+void TestForInstructor::CreateQuestionCategory(string category_name) {
 	for (unsigned i = 0; i < assigned_questions_.size(); ++i) {
 		if (get<0>(assigned_questions_[i]) == category_name) {
 			return;
@@ -62,7 +62,7 @@ void Test::CreateQuestionCategory(string category_name) {
 	assigned_questions_.push_back(tuple<string, int, vector<shared_ptr<Question>>>(category_name, -1, vector <shared_ptr<Question>>()));
 }
 
-void Test::SelectCurrentQuestion(string question_number_string) {
+void TestForInstructor::SelectCurrentQuestion(string question_number_string) {
 	if (question_number_string.size() == 0) {
 		return;
 	}
@@ -94,7 +94,7 @@ void Test::SelectCurrentQuestion(string question_number_string) {
 	}
 }
 
-void Test::AddCurrentQuestionToCategory(string category_name) {
+void TestForInstructor::AddCurrentQuestionToCategory(string category_name) {
 	if (current_category_ == category_name) {
 		return;
 	}
@@ -150,7 +150,7 @@ void Test::AddCurrentQuestionToCategory(string category_name) {
 	}
 }
 
-void Test::RemoveCurrentQuestionFromCategory() {
+void TestForInstructor::RemoveCurrentQuestionFromCategory() {
 	if (current_question_.expired() || current_category_ == "") {
 		return;
 	}
@@ -172,7 +172,7 @@ void Test::RemoveCurrentQuestionFromCategory() {
 	}
 }
 
-void Test::DeleteCurrentQuestion() {
+void TestForInstructor::DeleteCurrentQuestion() {
 	if (current_question_.expired() == true) {
 		return;
 	}
@@ -200,7 +200,7 @@ void Test::DeleteCurrentQuestion() {
 	}
 }
 
-void Test::DeleteQuestionCategory(string category_name) {
+void TestForInstructor::DeleteQuestionCategory(string category_name) {
 	if (current_category_ == category_name) {
 		current_category_ = "";
 	}
@@ -215,7 +215,7 @@ void Test::DeleteQuestionCategory(string category_name) {
 	}
 }
 
-void Test::SwitchOrderOfCategories(string first_category_name, string second_category_name) {
+void TestForInstructor::SwitchOrderOfCategories(string first_category_name, string second_category_name) {
 	if (first_category_name == second_category_name) {
 		return;
 	}
@@ -244,7 +244,7 @@ void Test::SwitchOrderOfCategories(string first_category_name, string second_cat
 	}
 }
 
-void Test::ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string) {
+void TestForInstructor::ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string) {
 	if (number_of_questions_string.length() == 0) {
 		return;
 	}
@@ -265,7 +265,7 @@ void Test::ChangeNumberOfQuestionsToAskFromCategory(string category_name, string
 	}
 }
 
-double Test::GetMaxAvailableScore() {
+double TestForInstructor::GetMaxAvailableScore() {
 	double max_available_score = 0;
 	for (unsigned i = 0; i < assigned_questions_.size(); ++i) {
 		for (unsigned j = 0; j < get<2>(assigned_questions_[i]).size(); ++j) {

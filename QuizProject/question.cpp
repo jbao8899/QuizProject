@@ -119,3 +119,12 @@ double Question::GetMaxPossibleScore() {
 int Question::GetQuestionNumber() {
 	return question_number_;
 }
+
+bool Question::IsQuestionCompleted() {
+	if (current_score_ > 0 || available_points_.size() == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
