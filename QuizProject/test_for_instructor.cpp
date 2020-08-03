@@ -268,9 +268,18 @@ void TestForInstructor::ChangeNumberOfQuestionsToAskFromCategory(string category
 double TestForInstructor::GetMaxAvailableScore() {
 	double max_available_score = 0;
 	for (unsigned i = 0; i < assigned_questions_.size(); ++i) {
-		for (unsigned j = 0; j < get<2>(assigned_questions_[i]).size(); ++j) {
-			max_available_score += get<2>(assigned_questions_[i])[j]->GetMaxPossibleScore();
+		if (get<2>(assigned_questions_[i]).size() == 0) {
+			continue;
 		}
+
+		double number_of_questions_to_ask_from_category = min((double)get<1>(assigned_questions_[i]), (double)get<2>(assigned_questions_[i]).size());
+
+		if (number_of_questions_to_ask_from_category < 0) {
+			number_of_questions_to_ask_from_category = get<2>(assigned_questions_[i]).size();
+		}
+
+		max_available_score += number_of_questions_to_ask_from_category * get<2>(assigned_questions_[i])[0]->GetMaxPossibleScore();
 	}
+
 	return max_available_score;
 }

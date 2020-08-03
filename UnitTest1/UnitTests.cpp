@@ -809,7 +809,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 			Assert::AreEqual(question.GetQuestionNumber(), 0);
 		}
@@ -823,7 +823,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 			Assert::AreEqual(question.GetQuestionNumber(), 4346);
 		}
@@ -837,7 +837,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 			Assert::AreEqual(question.GetQuestionNumber(), 7);
 		}
@@ -851,7 +851,7 @@ namespace TestCases {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 			Assert::AreEqual(question.GetQuestionNumber(), 16);
 		}
@@ -865,147 +865,147 @@ namespace TestCases {
 			Assert::AreEqual(question.GetStudentAnswers().size(), (size_t)0);
 			Assert::AreEqual(question.GetCurrentScore(), 0.0);
 			Assert::AreEqual(question.GetMaxPossibleScore(), 0.0);
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 			Assert::AreEqual(question.GetQuestionNumber(), 2);
 		}
 
 		TEST_METHOD(GetSetPermittedAbsoluteError) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("5.1");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 5.1);
+			question.SetMaxPermittedAbsoluteError("5.1");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 5.1);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(GetSetPermittedNegativeAbsoluteError) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("-37.5");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), -37.5);
+			question.SetMaxPermittedAbsoluteError("-37.5");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), -37.5);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorTwoPeriods) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("5..1");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("5..1");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorTwoMinuses) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("--2");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("--2");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorMinusInWrongPlace) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("5-2");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("5-2");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorEmptyString) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorJustASpace) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError(" ");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError(" ");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorSpaceInFront) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError(" 0.1");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError(" 0.1");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorNotANumber) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("banana");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("banana");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetAbsoluteErrorContainsNonNumerical) {
 			NumericalQuestion question(1);
-			question.SetPermittedAbsoluteError("0.37s");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedAbsoluteError("0.37s");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 		TEST_METHOD(GetSetPermittedRelativeError) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("0.078");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("0.078");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.078);
 		}
 
 		TEST_METHOD(GetSetPermittedNegativeRelativeError) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("-2.3");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("-2.3");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), -2.3);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorTwoPeriods) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("5..1");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("5..1");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorTwoMinuses) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("--2");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("--2");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorMinusInWrongPlace) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("5-2");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("5-2");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorEmptyString) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorJustASpace) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError(" ");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError(" ");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorSpaceInFront) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError(" 0.1");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError(" 0.1");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorNotANumber) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("banana");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("banana");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
 		TEST_METHOD(CannotSetRelativeErrorContainsNonNumerical) {
 			NumericalQuestion question(1);
-			question.SetPermittedRelativeError("0.37s");
-			Assert::AreEqual(question.GetPermittedAbsoluteError(), 0.0);
+			question.SetMaxPermittedRelativeError("0.37s");
+			Assert::AreEqual(question.GetMaxPermittedAbsoluteError(), 0.0);
 			Assert::AreEqual(question.GetPermittedRelativeError(), 0.0);
 		}
 
@@ -1263,8 +1263,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("5.1689");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("0.01");
-			question.SetPermittedRelativeError("0.002");
+			question.SetMaxPermittedAbsoluteError("0.01");
+			question.SetMaxPermittedRelativeError("0.002");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("5.16", true));
@@ -1282,8 +1282,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("1000.0");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("10.0");
-			question.SetPermittedRelativeError("-1");
+			question.SetMaxPermittedAbsoluteError("10.0");
+			question.SetMaxPermittedRelativeError("-1");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("1009.999", true));
@@ -1301,8 +1301,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-21489.349");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("-439889.489389");
-			question.SetPermittedRelativeError("0.001");
+			question.SetMaxPermittedAbsoluteError("-439889.489389");
+			question.SetMaxPermittedRelativeError("0.001");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-21469.8505", true));
@@ -1321,8 +1321,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("432690930");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("-0.37");
-			question.SetPermittedRelativeError("-2");
+			question.SetMaxPermittedAbsoluteError("-0.37");
+			question.SetMaxPermittedRelativeError("-2");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-0.328957", true));
@@ -1340,8 +1340,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-21489.349");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("19.49");
-			question.SetPermittedRelativeError("0.001");
+			question.SetMaxPermittedAbsoluteError("19.49");
+			question.SetMaxPermittedRelativeError("0.001");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-21469.8505", false));
@@ -1359,8 +1359,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("1000.0");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("10.0");
-			question.SetPermittedRelativeError("0.0099");
+			question.SetMaxPermittedAbsoluteError("10.0");
+			question.SetMaxPermittedRelativeError("0.0099");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("1009.999", false));
@@ -1378,8 +1378,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("-0.000218");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("0.000001");
-			question.SetPermittedRelativeError("0.00499");
+			question.SetMaxPermittedAbsoluteError("0.000001");
+			question.SetMaxPermittedRelativeError("0.00499");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("-0.00021691", false));
@@ -1397,8 +1397,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("0.000000001");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("0.0000000005");
-			question.SetPermittedRelativeError("-293573948");
+			question.SetMaxPermittedAbsoluteError("0.0000000005");
+			question.SetMaxPermittedRelativeError("-293573948");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("0.0000000016", false));
@@ -1416,8 +1416,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("8934956759948.5");
 			question.SetAvailablePoints("5,3,1");
-			question.SetPermittedAbsoluteError("-1");
-			question.SetPermittedRelativeError("0.05");
+			question.SetMaxPermittedAbsoluteError("-1");
+			question.SetMaxPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1435,8 +1435,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("100.0");
 			question.SetAvailablePoints("5,4,3,2,1");
-			question.SetPermittedAbsoluteError("5.0");
-			question.SetPermittedRelativeError("0.05");
+			question.SetMaxPermittedAbsoluteError("5.0");
+			question.SetMaxPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1464,8 +1464,8 @@ namespace TestCases {
 			NumericalQuestion question(1);
 			question.AddCorrectAnswer("100.0");
 			question.SetAvailablePoints("5,3");
-			question.SetPermittedAbsoluteError("5.0");
-			question.SetPermittedRelativeError("0.05");
+			question.SetMaxPermittedAbsoluteError("5.0");
+			question.SetMaxPermittedRelativeError("0.05");
 
 			vector<pair<string, bool>> expected_student_answers;
 			expected_student_answers.push_back(pair<string, bool>("9381704597946", false));
@@ -1689,33 +1689,33 @@ namespace TestCases {
 
 		TEST_METHOD(TwoQuestionsNotSameIfDifferentMaxPermittedAbsoluteError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedAbsoluteError("0.01");
+			first_question.SetMaxPermittedAbsoluteError("0.01");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedAbsoluteError("0.011");
+			second_question.SetMaxPermittedAbsoluteError("0.011");
 			Assert::IsFalse(first_question == second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsDifferentIfDifferentMaxPermittedAbsoluteError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedAbsoluteError("0.01");
+			first_question.SetMaxPermittedAbsoluteError("0.01");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedAbsoluteError("0.011");
+			second_question.SetMaxPermittedAbsoluteError("0.011");
 			Assert::IsTrue(first_question != second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsNotSameIfDifferentMaxPermittedRelativeError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedRelativeError("0.00001");
+			first_question.SetMaxPermittedRelativeError("0.00001");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedRelativeError("0.00000999999999");
+			second_question.SetMaxPermittedRelativeError("0.00000999999999");
 			Assert::IsFalse(first_question == second_question);
 		}
 
 		TEST_METHOD(TwoQuestionsDifferentIfDifferentMaxPermittedRelativeError) {
 			NumericalQuestion first_question(1, "same");
-			first_question.SetPermittedRelativeError("0.00001");
+			first_question.SetMaxPermittedRelativeError("0.00001");
 			NumericalQuestion second_question(1, "same");
-			second_question.SetPermittedRelativeError("0.00000999999999");
+			second_question.SetMaxPermittedRelativeError("0.00000999999999");
 			Assert::IsTrue(first_question != second_question);
 		}
 
@@ -1845,8 +1845,8 @@ namespace TestCases {
 			question.AddCorrectAnswer("5");
 			question.AddCorrectAnswer("6");
 			question.AddCorrectAnswer("7");
-			question.SetPermittedAbsoluteError("0.1");
-			question.SetPermittedRelativeError("0.02");
+			question.SetMaxPermittedAbsoluteError("0.1");
+			question.SetMaxPermittedRelativeError("0.02");
 			question.SubmitStudentAnswer("10");
 			question.SubmitStudentAnswer("5");
 			Assert::IsTrue(question == question);
@@ -1858,8 +1858,8 @@ namespace TestCases {
 			question.AddCorrectAnswer("5");
 			question.AddCorrectAnswer("6");
 			question.AddCorrectAnswer("7");
-			question.SetPermittedAbsoluteError("0.1");
-			question.SetPermittedRelativeError("0.02");
+			question.SetMaxPermittedAbsoluteError("0.1");
+			question.SetMaxPermittedRelativeError("0.02");
 			question.SubmitStudentAnswer("10");
 			question.SubmitStudentAnswer("5");
 			Assert::IsFalse(question != question);
@@ -1871,8 +1871,8 @@ namespace TestCases {
 			first_question.AddCorrectAnswer("5");
 			first_question.AddCorrectAnswer("6");
 			first_question.AddCorrectAnswer("7");
-			first_question.SetPermittedAbsoluteError("0.1");
-			first_question.SetPermittedRelativeError("0.02");
+			first_question.SetMaxPermittedAbsoluteError("0.1");
+			first_question.SetMaxPermittedRelativeError("0.02");
 			first_question.SubmitStudentAnswer("10");
 			first_question.SubmitStudentAnswer("5");
 
@@ -1881,8 +1881,8 @@ namespace TestCases {
 			second_question.AddCorrectAnswer("5");
 			second_question.AddCorrectAnswer("6");
 			second_question.AddCorrectAnswer("7");
-			second_question.SetPermittedAbsoluteError("0.1");
-			second_question.SetPermittedRelativeError("0.02");
+			second_question.SetMaxPermittedAbsoluteError("0.1");
+			second_question.SetMaxPermittedRelativeError("0.02");
 			second_question.SubmitStudentAnswer("10");
 			second_question.SubmitStudentAnswer("5");
 			Assert::IsTrue(first_question == second_question);
@@ -1894,8 +1894,8 @@ namespace TestCases {
 			first_question.AddCorrectAnswer("5");
 			first_question.AddCorrectAnswer("6");
 			first_question.AddCorrectAnswer("7");
-			first_question.SetPermittedAbsoluteError("0.1");
-			first_question.SetPermittedRelativeError("0.02");
+			first_question.SetMaxPermittedAbsoluteError("0.1");
+			first_question.SetMaxPermittedRelativeError("0.02");
 			first_question.SubmitStudentAnswer("10");
 			first_question.SubmitStudentAnswer("5");
 
@@ -1904,8 +1904,8 @@ namespace TestCases {
 			second_question.AddCorrectAnswer("5");
 			second_question.AddCorrectAnswer("6");
 			second_question.AddCorrectAnswer("7");
-			second_question.SetPermittedAbsoluteError("0.1");
-			second_question.SetPermittedRelativeError("0.02");
+			second_question.SetMaxPermittedAbsoluteError("0.1");
+			second_question.SetMaxPermittedRelativeError("0.02");
 			second_question.SubmitStudentAnswer("10");
 			second_question.SubmitStudentAnswer("5");
 			Assert::IsFalse(first_question != second_question);
@@ -1978,8 +1978,8 @@ namespace TestCases {
 				question.SetAvailablePoints("1.5,0.75,0.5,0.25");
 				question.SubmitStudentAnswer("3");
 				question.SubmitStudentAnswer("2");
-				question.SetPermittedAbsoluteError("0.1");
-				question.SetPermittedRelativeError("0.05");
+				question.SetMaxPermittedAbsoluteError("0.1");
+				question.SetMaxPermittedRelativeError("0.05");
 				question.SubmitStudentAnswer("jiersjgiij");
 
 				ofstream os("testing.dat", ios::binary);
@@ -1998,8 +1998,8 @@ namespace TestCases {
 				same_as_question.SubmitStudentAnswer("3");
 				same_as_question.SubmitStudentAnswer("2");
 				same_as_question.SubmitStudentAnswer("jiersjgiij");
-				same_as_question.SetPermittedAbsoluteError("0.1");
-				same_as_question.SetPermittedRelativeError("0.05");
+				same_as_question.SetMaxPermittedAbsoluteError("0.1");
+				same_as_question.SetMaxPermittedRelativeError("0.05");
 
 				ifstream is("testing.dat", ios::binary);
 				cereal::PortableBinaryInputArchive iarchive(is);
@@ -3584,6 +3584,109 @@ namespace TestCases {
 			Assert::AreEqual(test.GetMaxAvailableScore(), 17.1);
 		}
 
+		TEST_METHOD(GetMaxAvailablePointsWhenCategoryContainsMoreQuestionsThanToBeAsked) {
+			TestForInstructor test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("5,4.8,1.35");
+
+			test.CreateQuestionCategory("Questions");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			test.ChangeNumberOfQuestionsToAskFromCategory("Questions", "2");
+
+			Assert::AreEqual(test.GetMaxAvailableScore(), 10.0);
+		}
+
+		TEST_METHOD(GetMaxAvailablePointsWhenEmptyCategoryExists) {
+			TestForInstructor test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("5,4.8,1.35");
+
+			test.CreateQuestionCategory("Questions");
+			test.CreateQuestionCategory("Empty");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			test.ChangeNumberOfQuestionsToAskFromCategory("Questions", "2");
+
+			Assert::AreEqual(test.GetMaxAvailableScore(), 10.0);
+		}
+
+		TEST_METHOD(GetMaxAvailablePointsWhenEmptyCategoryExistsAndTryingToAskMultipleQuestionsFromIt) {
+			TestForInstructor test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("5,4.8,1.35");
+
+			test.CreateQuestionCategory("Questions");
+			test.CreateQuestionCategory("Empty");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			test.ChangeNumberOfQuestionsToAskFromCategory("Questions", "2");
+			test.ChangeNumberOfQuestionsToAskFromCategory("Empty", "2");
+
+			Assert::AreEqual(test.GetMaxAvailableScore(), 10.0);
+		}
+
+		TEST_METHOD(GetMaxAvailablePointsWhenTryingToAskMoreQuestionsFromCategoryThanAreInIt) {
+			TestForInstructor test("test");
+
+			test.AddNumericalQuestion("What is 5 + 3?");
+			test.AddShortAnswerQuestion("What is George Washington's name?");
+			test.AddNumericalQuestion("What is 3 times 7?");
+
+			test.GetUnassignedQuestions()[0]->SetAvailablePoints("5,4,3,2,1");
+			test.GetUnassignedQuestions()[1]->SetAvailablePoints("5,4");
+			test.GetUnassignedQuestions()[2]->SetAvailablePoints("5,4.8,1.35");
+
+			test.CreateQuestionCategory("Questions");
+
+			test.SelectCurrentQuestion("1");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("2");
+			test.AddCurrentQuestionToCategory("Questions");
+			test.SelectCurrentQuestion("3");
+			test.AddCurrentQuestionToCategory("Questions");
+
+			test.ChangeNumberOfQuestionsToAskFromCategory("Questions", "4");
+
+			Assert::AreEqual(test.GetMaxAvailableScore(), 15.0);
+		}
+
 		TEST_METHOD(SaveAndLoadTest) {
 			{
 				TestForInstructor test("Test for testing");
@@ -3601,8 +3704,8 @@ namespace TestCases {
 				test.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 				test.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 				test.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("3");
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("2");
 				test.GetUnassignedQuestions()[1]->SubmitStudentAnswer("jiersjgiij");
@@ -3611,8 +3714,8 @@ namespace TestCases {
 				test.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 				test.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 				test.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("3");
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("2");
 				test.GetUnassignedQuestions()[2]->SubmitStudentAnswer("GJ*E");
@@ -3663,8 +3766,8 @@ namespace TestCases {
 				question_two.AddCorrectAnswer("2");
 				question_two.AddCorrectAnswer("-2");
 				question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-				question_two.SetPermittedAbsoluteError("0.1");
-				question_two.SetPermittedRelativeError("0.05");
+				question_two.SetMaxPermittedAbsoluteError("0.1");
+				question_two.SetMaxPermittedRelativeError("0.05");
 				question_two.SubmitStudentAnswer("3");
 				question_two.SubmitStudentAnswer("2");
 				question_two.SubmitStudentAnswer("jiersjgiij");
@@ -3673,8 +3776,8 @@ namespace TestCases {
 				question_three.AddCorrectAnswer("3");
 				question_three.AddCorrectAnswer("-3");
 				question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-				question_three.SetPermittedAbsoluteError("0.1");
-				question_three.SetPermittedRelativeError("0.05");
+				question_three.SetMaxPermittedAbsoluteError("0.1");
+				question_three.SetMaxPermittedRelativeError("0.05");
 				question_three.SubmitStudentAnswer("3");
 				question_three.SubmitStudentAnswer("2");
 				question_three.SubmitStudentAnswer("GJ*E");
@@ -3755,15 +3858,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -3796,15 +3899,15 @@ namespace TestCases {
 			question_two.AddCorrectAnswer("2");
 			question_two.AddCorrectAnswer("-2");
 			question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-			question_two.SetPermittedAbsoluteError("0.1");
-			question_two.SetPermittedRelativeError("0.05");
+			question_two.SetMaxPermittedAbsoluteError("0.1");
+			question_two.SetMaxPermittedRelativeError("0.05");
 
 			NumericalQuestion question_three(3, "What is the square root of 9?");
 			question_three.AddCorrectAnswer("3");
 			question_three.AddCorrectAnswer("-3");
 			question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-			question_three.SetPermittedAbsoluteError("0.1");
-			question_three.SetPermittedRelativeError("0.05");
+			question_three.SetMaxPermittedAbsoluteError("0.1");
+			question_three.SetMaxPermittedRelativeError("0.05");
 
 			ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 			question_four.AddCorrectAnswer("Abraham");
@@ -3841,15 +3944,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -3879,15 +3982,15 @@ namespace TestCases {
 			question_two.AddCorrectAnswer("2");
 			question_two.AddCorrectAnswer("-2");
 			question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-			question_two.SetPermittedAbsoluteError("0.1");
-			question_two.SetPermittedRelativeError("0.05");
+			question_two.SetMaxPermittedAbsoluteError("0.1");
+			question_two.SetMaxPermittedRelativeError("0.05");
 
 			NumericalQuestion question_three(3, "What is the square root of 9?");
 			question_three.AddCorrectAnswer("3");
 			question_three.AddCorrectAnswer("-3");
 			question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-			question_three.SetPermittedAbsoluteError("0.1");
-			question_three.SetPermittedRelativeError("0.05");
+			question_three.SetMaxPermittedAbsoluteError("0.1");
+			question_three.SetMaxPermittedRelativeError("0.05");
 
 			ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 			question_four.AddCorrectAnswer("Abraham");
@@ -3947,15 +4050,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -3998,15 +4101,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4037,15 +4140,15 @@ namespace TestCases {
 			question_two.AddCorrectAnswer("2");
 			question_two.AddCorrectAnswer("-2");
 			question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-			question_two.SetPermittedAbsoluteError("0.1");
-			question_two.SetPermittedRelativeError("0.05");
+			question_two.SetMaxPermittedAbsoluteError("0.1");
+			question_two.SetMaxPermittedRelativeError("0.05");
 
 			NumericalQuestion question_three(3, "What is the square root of 9?");
 			question_three.AddCorrectAnswer("3");
 			question_three.AddCorrectAnswer("-3");
 			question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-			question_three.SetPermittedAbsoluteError("0.1");
-			question_three.SetPermittedRelativeError("0.05");
+			question_three.SetMaxPermittedAbsoluteError("0.1");
+			question_three.SetMaxPermittedRelativeError("0.05");
 
 			ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 			question_four.AddCorrectAnswer("Abraham");
@@ -4095,15 +4198,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4132,15 +4235,15 @@ namespace TestCases {
 			question_two.AddCorrectAnswer("2");
 			question_two.AddCorrectAnswer("-2");
 			question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-			question_two.SetPermittedAbsoluteError("0.1");
-			question_two.SetPermittedRelativeError("0.05");
+			question_two.SetMaxPermittedAbsoluteError("0.1");
+			question_two.SetMaxPermittedRelativeError("0.05");
 
 			NumericalQuestion question_three(3, "What is the square root of 9?");
 			question_three.AddCorrectAnswer("3");
 			question_three.AddCorrectAnswer("-3");
 			question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-			question_three.SetPermittedAbsoluteError("0.1");
-			question_three.SetPermittedRelativeError("0.05");
+			question_three.SetMaxPermittedAbsoluteError("0.1");
+			question_three.SetMaxPermittedRelativeError("0.05");
 
 			ShortAnswerQuestion question_four(4, "What is Abraham Lincoln's Name?");
 			question_four.AddCorrectAnswer("Abraham");
@@ -4202,15 +4305,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4229,7 +4332,7 @@ namespace TestCases {
 
 			TestForStudent test_for_student(test_for_instructor);
 
-			test_for_student.SetIndexOfCurrentQuestion("1");
+			test_for_student.GoToQuestionNumber("1");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4250,15 +4353,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4278,7 +4381,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("");
+			test_for_student.GoToQuestionNumber("");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4299,15 +4402,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4327,7 +4430,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion(" ");
+			test_for_student.GoToQuestionNumber(" ");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4348,15 +4451,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4376,7 +4479,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("aji98ej4t5huighcHEFR&*");
+			test_for_student.GoToQuestionNumber("aji98ej4t5huighcHEFR&*");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4397,15 +4500,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4425,7 +4528,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("1.5");
+			test_for_student.GoToQuestionNumber("1.5");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4446,15 +4549,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4474,7 +4577,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("2a");
+			test_for_student.GoToQuestionNumber("2a");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4495,15 +4598,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4523,7 +4626,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("-5");
+			test_for_student.GoToQuestionNumber("-5");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4544,15 +4647,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4572,11 +4675,11 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("100");
+			test_for_student.GoToQuestionNumber("100");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
-		TEST_METHOD(CannotSetIndexOfCurrentQuestionIfIndexIsEqualToSizeOfQuestionsVector) {
+		TEST_METHOD(CannotSetIndexOfCurrentQuestionIfIndexIsPastEndOfVector) {
 			TestForInstructor test_for_instructor("Test for testing");
 
 			test_for_instructor.CreateQuestionCategory("First");
@@ -4593,15 +4696,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4621,7 +4724,7 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("4");
+			test_for_student.GoToQuestionNumber("5");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 		}
 
@@ -4642,15 +4745,15 @@ namespace TestCases {
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 
 			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
 			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
@@ -4670,16 +4773,16 @@ namespace TestCases {
 			TestForStudent test_for_student(test_for_instructor);
 			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
 
-			test_for_student.SetIndexOfCurrentQuestion("1");
+			test_for_student.GoToQuestionNumber("2");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)1);
 
-			test_for_student.SetIndexOfCurrentQuestion("3");
+			test_for_student.GoToQuestionNumber("4");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)3);
 
-			test_for_student.SetIndexOfCurrentQuestion("0");
+			test_for_student.GoToQuestionNumber("1");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)0);
 
-			test_for_student.SetIndexOfCurrentQuestion("2");
+			test_for_student.GoToQuestionNumber("3");
 			Assert::AreEqual(test_for_student.GetIndexOfCurrentQuestion(), (unsigned)2);
 		}
 
@@ -4704,8 +4807,8 @@ namespace TestCases {
 				test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
 				test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
 				test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
-				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedAbsoluteError("0.1");
-				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetPermittedRelativeError("0.05");
+				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
 				test_for_instructor.GetUnassignedQuestions()[1]->SubmitStudentAnswer("3");
 				test_for_instructor.GetUnassignedQuestions()[1]->SubmitStudentAnswer("2");
 				test_for_instructor.GetUnassignedQuestions()[1]->SubmitStudentAnswer("jiersjgiij");
@@ -4714,8 +4817,8 @@ namespace TestCases {
 				test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
 				test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
 				test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
-				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedAbsoluteError("0.1");
-				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetPermittedRelativeError("0.05");
+				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+				dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
 				test_for_instructor.GetUnassignedQuestions()[2]->SubmitStudentAnswer("3");
 				test_for_instructor.GetUnassignedQuestions()[2]->SubmitStudentAnswer("2");
 				test_for_instructor.GetUnassignedQuestions()[2]->SubmitStudentAnswer("GJ*E");
@@ -4740,7 +4843,7 @@ namespace TestCases {
 
 				TestForStudent test_for_student(test_for_instructor);
 				test_for_student.ChangeIfOrderOfQuestionsIsFixed();
-				test_for_student.SetIndexOfCurrentQuestion("2");
+				test_for_student.GoToQuestionNumber("3");
 
 				ofstream os("testing.dat", ios::binary);
 
@@ -4764,8 +4867,8 @@ namespace TestCases {
 				question_two.AddCorrectAnswer("2");
 				question_two.AddCorrectAnswer("-2");
 				question_two.SetAvailablePoints("1.5,0.75,0.5,0.25");
-				question_two.SetPermittedAbsoluteError("0.1");
-				question_two.SetPermittedRelativeError("0.05");
+				question_two.SetMaxPermittedAbsoluteError("0.1");
+				question_two.SetMaxPermittedRelativeError("0.05");
 				question_two.SubmitStudentAnswer("3");
 				question_two.SubmitStudentAnswer("2");
 				question_two.SubmitStudentAnswer("jiersjgiij");
@@ -4774,8 +4877,8 @@ namespace TestCases {
 				question_three.AddCorrectAnswer("3");
 				question_three.AddCorrectAnswer("-3");
 				question_three.SetAvailablePoints("1.5,1.5,1.5,1.5");
-				question_three.SetPermittedAbsoluteError("0.1");
-				question_three.SetPermittedRelativeError("0.05");
+				question_three.SetMaxPermittedAbsoluteError("0.1");
+				question_three.SetMaxPermittedRelativeError("0.05");
 				question_three.SubmitStudentAnswer("3");
 				question_three.SubmitStudentAnswer("2");
 				question_three.SubmitStudentAnswer("GJ*E");
@@ -4808,6 +4911,63 @@ namespace TestCases {
 				Assert::IsTrue(*dynamic_pointer_cast<NumericalQuestion>(test_for_student.GetQuestions()[2]) == question_three);
 				Assert::IsTrue(*dynamic_pointer_cast<ShortAnswerQuestion>(test_for_student.GetQuestions()[3]) == question_four);
 			}
+		}
+
+		TEST_METHOD(GetCurrentScore) {
+			TestForInstructor test_for_instructor("Test for testing");
+
+			test_for_instructor.CreateQuestionCategory("First");
+			test_for_instructor.CreateQuestionCategory("Empty");
+			test_for_instructor.CreateQuestionCategory("Third");
+
+			test_for_instructor.AddShortAnswerQuestion("What are the primary colors?");
+			test_for_instructor.GetUnassignedQuestions()[0]->AddCorrectAnswer("red");
+			test_for_instructor.GetUnassignedQuestions()[0]->AddCorrectAnswer("blue");
+			test_for_instructor.GetUnassignedQuestions()[0]->AddCorrectAnswer("yellow");
+			test_for_instructor.GetUnassignedQuestions()[0]->SetAvailablePoints("1.5,0.75,0.5,0.25");
+
+			test_for_instructor.AddNumericalQuestion("What is the square root of 4?");
+			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("2");
+			test_for_instructor.GetUnassignedQuestions()[1]->AddCorrectAnswer("-2");
+			test_for_instructor.GetUnassignedQuestions()[1]->SetAvailablePoints("1.5,0.75,0.5,0.25");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[1])->SetMaxPermittedRelativeError("0.05");
+
+			test_for_instructor.AddNumericalQuestion("What is the square root of 9?");
+			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("3");
+			test_for_instructor.GetUnassignedQuestions()[2]->AddCorrectAnswer("-3");
+			test_for_instructor.GetUnassignedQuestions()[2]->SetAvailablePoints("1.5,1.5,1.5,1.5");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedAbsoluteError("0.1");
+			dynamic_pointer_cast<NumericalQuestion>(test_for_instructor.GetUnassignedQuestions()[2])->SetMaxPermittedRelativeError("0.05");
+
+			test_for_instructor.AddShortAnswerQuestion("What is Abraham Lincoln's Name?");
+			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham");
+			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Lincoln");
+			test_for_instructor.GetUnassignedQuestions()[3]->AddCorrectAnswer("Abraham Lincoln");
+			test_for_instructor.GetUnassignedQuestions()[3]->SetAvailablePoints("2");
+
+			test_for_instructor.SelectCurrentQuestion("1");
+			test_for_instructor.AddCurrentQuestionToCategory("First");
+			test_for_instructor.SelectCurrentQuestion("2");
+			test_for_instructor.AddCurrentQuestionToCategory("First");
+			test_for_instructor.SelectCurrentQuestion("3");
+			test_for_instructor.AddCurrentQuestionToCategory("First");
+			test_for_instructor.SelectCurrentQuestion("4");
+			test_for_instructor.AddCurrentQuestionToCategory("Third");
+
+			TestForStudent test_for_student(test_for_instructor);
+
+			test_for_student.ChangeIfOrderOfQuestionsIsFixed();
+
+			test_for_student.GetQuestions()[0]->SubmitStudentAnswer("purple");
+			test_for_student.GetQuestions()[0]->SubmitStudentAnswer("RED");
+			test_for_student.GetQuestions()[1]->SubmitStudentAnswer("-2");
+			test_for_student.GetQuestions()[2]->SubmitStudentAnswer("4");
+			test_for_student.GetQuestions()[2]->SubmitStudentAnswer("5");
+			test_for_student.GetQuestions()[2]->SubmitStudentAnswer("-39028");
+			test_for_student.GetQuestions()[2]->SubmitStudentAnswer("3.56789");
+
+			Assert::AreEqual(test_for_student.GetCurrentScore(), 2.25);
 		}
 	};
 }

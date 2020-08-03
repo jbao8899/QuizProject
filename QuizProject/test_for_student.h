@@ -47,13 +47,17 @@ public:
 	//Returns the max_possible_score_.
 	double                        GetMaxPossibleScore();
 
+	//Iterates through all the questions and sums the values you get from doing GetCurrentScore() on all of them.
+	double						  GetCurrentScore();
+
 	//Returns the index of the current question.
 	unsigned                      GetIndexOfCurrentQuestion();
 
-	//Sets index_of_current_question_ to set_index_of_current_question. If set_index_of_current_question cannot be converted to an int, then does nothing.
-	//If it is less than 0 or greater than questions_.size() - 1, then nothing will be done
+	//Sets index_of_current_question_ to set_index_of_current_question - 1. If set_index_of_current_question cannot be converted to an int, then does nothing.
+	//Sets index_of_current_question_ to set_index_of_current_question - 1 because questions are numbered starting from 1 for test taker.
+	//If it is less than 1 or greater than questions_.size(), then nothing will be done
 	//Not allowed (will do nothing) if order_of_questions_fixed_ == true
-	void                          SetIndexOfCurrentQuestion(string set_index_of_current_question);
+	void                          GoToQuestionNumber(string set_index_of_current_question);
 
 	//Returns a reference to the vector of questions.
 	vector<shared_ptr<Question>>& GetQuestions();

@@ -70,12 +70,20 @@ double TestForStudent::GetMaxPossibleScore() {
 	return max_possible_score_;
 }
 
+double TestForStudent::GetCurrentScore() {
+	double current_score = 0.0;
+	for (unsigned i = 0; i < questions_.size(); ++i) {
+		current_score += questions_[i]->GetCurrentScore();
+	}
+	return current_score;
+}
+
 unsigned TestForStudent::GetIndexOfCurrentQuestion() {
 	return index_of_current_question_;
 }
 
 
-void TestForStudent::SetIndexOfCurrentQuestion(string set_index_of_current_question) {
+void TestForStudent::GoToQuestionNumber(string set_index_of_current_question) {
 	if (order_of_questions_fixed_ == true || set_index_of_current_question.size() == 0) {
 		return;
 	}
@@ -88,11 +96,11 @@ void TestForStudent::SetIndexOfCurrentQuestion(string set_index_of_current_quest
 
 	int question_number = stoi(set_index_of_current_question);
 
-	if (question_number < 0 || question_number > (int)(questions_.size() - 1)) {
+	if (question_number < 1 || question_number > (int)(questions_.size())) {
 		return;
 	}
 
-	index_of_current_question_ = question_number;
+	index_of_current_question_ = question_number - 1;
 }
 
 vector<shared_ptr<Question>>& TestForStudent::GetQuestions() {

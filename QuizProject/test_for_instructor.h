@@ -11,6 +11,7 @@
 using std::dynamic_pointer_cast;
 using std::get;
 using std::make_shared;
+using std::min;
 using std::shared_ptr;
 using std::stoi;
 using std::swap;
@@ -132,7 +133,9 @@ public:
 	//If number_of_questions contains any characters besides digits or is empty, then does nothing and returns.
 	void                                                            ChangeNumberOfQuestionsToAskFromCategory(string category_name, string number_of_questions_string);
 
-	//Iterates through all Questions in assigned_questions_, adds up the max scores available on each, then returns that.
+	//Iterates through all categories of questions to be asked, gets the maximum score a student can achieve in each category
+	//(number of questions to be asked times max score for questions in that category, because all questions in a category must have the same maximum score),
+	//then sums all of those values to get the maximum score that a test taker can achieve.
 	//If assigned_questions_ is empty, returns 0.
 	double                                                          GetMaxAvailableScore();
 

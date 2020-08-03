@@ -25,16 +25,16 @@ public:
 	// and 0 max_permitted_absolute_error_ and 0 max_permitted_relative_error_
 	NumericalQuestion(int set_question_number, string set_question);
 
-	//Changes the max_permitted_absolute_error_ to set_permitted_absolute_error (turned into a string).
-	//If set_permitted_absolute_error is not a valid decimal number, then nothing will be done.
-	void   SetPermittedAbsoluteError(string set_permitted_absolute_error);
+	//Changes the max_permitted_absolute_error_ to set_max_permitted_absolute_error (turned into a string).
+	//If set_max_permitted_absolute_error is not a valid decimal number, then nothing will be done.
+	void   SetMaxPermittedAbsoluteError(string set_max_permitted_absolute_error);
 
 	//Returns the current max_permitted_absolute_error_
-	double GetPermittedAbsoluteError() const;
+	double GetMaxPermittedAbsoluteError() const;
 
-	//Changes the max_permitted_relative_error_ to set_permitted_relative_error
-	//If set_permitted_relative_error is not a valid decimal number, then nothing will be done.
-	void   SetPermittedRelativeError(string set_permitted_relative_error);
+	//Changes the max_permitted_relative_error_ to set_max_permitted_relative_error
+	//If set_max_permitted_relative_error is not a valid decimal number, then nothing will be done.
+	void   SetMaxPermittedRelativeError(string set_max_permitted_relative_error);
 
 	//Returns the current max_permitted_relative_error_
 	double GetPermittedRelativeError() const;
